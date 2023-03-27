@@ -6,6 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -17,40 +18,78 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="a7k-2C-lAt">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="8bo-cw-11L">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                                <color key="backgroundColor" name="YPWhiteAlpha50"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="sectionIndexBackgroundColor" name="YPBlack"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ImagesListCell" rowHeight="93" id="p0V-gH-DJU" customClass="ImagesListCell">
-                                        <rect key="frame" x="0.0" y="50" width="393" height="93"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ImagesListCell" rowHeight="139" id="uYc-hB-yfB" customClass="ImagesListCell" customModule="ImageFeedz" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="139"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="p0V-gH-DJU" id="Zhd-f8-x5d">
-                                            <rect key="frame" x="0.0" y="0.0" width="393" height="93"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uYc-hB-yfB" id="cnk-aK-Cwh">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="139"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zI4-pY-QDc" userLabel="LikeButton">
-                                                    <rect key="frame" x="310" y="9" width="21" height="18"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="lBd-V3-cto" userLabel="CellImage">
+                                                    <rect key="frame" x="16" y="8" width="361" height="123"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="16"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fvj-Pc-vkE" userLabel="LikeButton">
+                                                    <rect key="frame" x="298" y="23" width="85" height="23"/>
                                                     <state key="normal" title="Button"/>
                                                     <buttonConfiguration key="configuration" style="plain" image="LikeButtonActive"/>
                                                 </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="data" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L58-OO-dhG" userLabel="LabelData">
+                                                    <rect key="frame" x="28" y="107" width="34" height="29"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="fvj-Pc-vkE" firstAttribute="top" secondItem="cnk-aK-Cwh" secondAttribute="topMargin" constant="12" id="4Qm-4Y-KwK"/>
+                                                <constraint firstItem="L58-OO-dhG" firstAttribute="top" secondItem="cnk-aK-Cwh" secondAttribute="topMargin" constant="96" id="57P-65-HVN"/>
+                                                <constraint firstItem="lBd-V3-cto" firstAttribute="leading" secondItem="cnk-aK-Cwh" secondAttribute="leading" constant="16" id="BBT-C9-M5g"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="L58-OO-dhG" secondAttribute="trailing" constant="311" id="CjM-ha-RdS"/>
+                                                <constraint firstAttribute="bottom" secondItem="lBd-V3-cto" secondAttribute="bottom" constant="8" id="Fvj-oi-8AL"/>
+                                                <constraint firstItem="L58-OO-dhG" firstAttribute="leading" secondItem="cnk-aK-Cwh" secondAttribute="leadingMargin" constant="8" id="KVU-TD-avY"/>
+                                                <constraint firstItem="lBd-V3-cto" firstAttribute="top" secondItem="cnk-aK-Cwh" secondAttribute="top" constant="8" id="Ro3-YI-o8X"/>
+                                                <constraint firstItem="fvj-Pc-vkE" firstAttribute="leading" secondItem="cnk-aK-Cwh" secondAttribute="leadingMargin" constant="278" id="ZZn-cX-Uot"/>
+                                                <constraint firstItem="L58-OO-dhG" firstAttribute="bottom" secondItem="cnk-aK-Cwh" secondAttribute="bottomMargin" constant="8" id="guj-DB-iUD"/>
+                                                <constraint firstItem="fvj-Pc-vkE" firstAttribute="trailing" secondItem="cnk-aK-Cwh" secondAttribute="trailingMargin" constant="10" id="k20-V2-ksb"/>
+                                                <constraint firstAttribute="trailing" secondItem="lBd-V3-cto" secondAttribute="trailing" constant="16" id="ljD-jF-hZg"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="fvj-Pc-vkE" secondAttribute="bottom" constant="82" id="qG1-tH-qt4"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="cellImage" destination="lBd-V3-cto" id="jmm-kg-uvA"/>
+                                            <outlet property="labelData" destination="L58-OO-dhG" id="d9B-hv-UEr"/>
+                                            <outlet property="likeButton" destination="fvj-Pc-vkE" id="bQy-dc-r6L"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="IFf-OJ-ywK"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="xih-YQ-ufq"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="YPBlack"/>
                         <constraints>
-                            <constraint firstItem="a7k-2C-lAt" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="2Fd-3F-43Z"/>
-                            <constraint firstAttribute="bottom" secondItem="a7k-2C-lAt" secondAttribute="bottom" id="PJB-5E-f5G"/>
-                            <constraint firstItem="a7k-2C-lAt" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="msK-V5-7oc"/>
-                            <constraint firstItem="a7k-2C-lAt" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="xVs-MX-5d0"/>
+                            <constraint firstItem="8bo-cw-11L" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="4sz-2s-HE1"/>
+                            <constraint firstAttribute="bottom" secondItem="8bo-cw-11L" secondAttribute="bottom" id="G7m-Ph-tLP"/>
+                            <constraint firstItem="8bo-cw-11L" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Z5m-Tp-0HR"/>
+                            <constraint firstItem="8bo-cw-11L" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="drG-aD-3sh"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="tableView" destination="a7k-2C-lAt" id="OVS-4j-bZb"/>
+                        <outlet property="tableView" destination="8bo-cw-11L" id="I6f-wS-uaX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -59,12 +98,13 @@
         </scene>
     </scenes>
     <resources>
+        <image name="0" width="200" height="132"/>
         <image name="LikeButtonActive" width="29" height="26"/>
         <namedColor name="YPBlack">
             <color red="0.10199999809265137" green="0.10599999874830246" blue="0.13300000131130219" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="YPWhiteAlpha50">
-            <color red="1" green="1" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
