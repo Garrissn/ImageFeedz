@@ -8,11 +8,11 @@
 import Foundation
 import UIKit
 
-class ImagesListViewController: UIViewController {
+final class ImagesListViewController: UIViewController {
+    // MARK: - Outlets
+    @IBOutlet private weak var tableView: UITableView!
     
-    
-    @IBOutlet weak var tableView: UITableView!
-    
+    // MARK: - Private Properties
     private let photosName: [String] = Array(0..<20).map{ "\($0)" }
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -22,15 +22,14 @@ class ImagesListViewController: UIViewController {
     }()
     
     
-    
+    // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         
     }
-    
 }
-
+// MARK: - UITableViewDataSource
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return photosName.count
@@ -48,7 +47,7 @@ extension ImagesListViewController: UITableViewDataSource {
     
     
 }
-
+// MARK: - UITableViewDelegate
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {}
     
@@ -77,7 +76,7 @@ extension ImagesListViewController {
         cell.labelData.text = dateFormatter.string(from: Date())
         
         let isLiked = indexPath.row % 2 == 0
-        let likedImage = isLiked ? UIImage(named: "likeButtonActive") : UIImage(named: "likeButtonNoActive")
+        let likedImage = isLiked ? UIImage(named: "likeOff") : UIImage(named: "likeOn")
         cell.likeButton.setImage(likedImage, for: .normal)
     }
 }
