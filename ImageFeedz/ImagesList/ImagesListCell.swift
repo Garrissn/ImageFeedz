@@ -17,6 +17,4 @@ final class ImagesListCell: UITableViewCell {
     @IBOutlet  weak var labelData: UILabel!
     // MARK: - Public Properties
     static let reuseIdentifier = "ImagesListCell"
-    
-    
 }
