@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		CE274F9129D1D28400F48F8A /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE274F9029D1D28400F48F8A /* ImagesListViewController.swift */; };
 		CE274F9329D1D9A100F48F8A /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE274F9229D1D9A100F48F8A /* ImagesListCell.swift */; };
+		CE38039129E72954000103AA /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE38039029E72954000103AA /* Resources.swift */; };
 		CE68268C29DC4AEF00A969D2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE68268B29DC4AEF00A969D2 /* ProfileViewController.swift */; };
 		CE6AB46229CD72C000338D9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6AB46129CD72C000338D9F /* AppDelegate.swift */; };
 		CE6AB46429CD72C000338D9F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6AB46329CD72C000338D9F /* SceneDelegate.swift */; };
@@ -42,6 +43,7 @@
 /* Begin PBXFileReference section */
 		CE274F9029D1D28400F48F8A /* ImagesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListViewController.swift; sourceTree = "<group>"; };
 		CE274F9229D1D9A100F48F8A /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
+		CE38039029E72954000103AA /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
 		CE38FA1029CF30DD0026601A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE68268B29DC4AEF00A969D2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CE6AB45E29CD72C000338D9F /* ImageFeedz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeedz.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				CE6AB49129CD881D00338D9F /* UIColor+Extensions.swift */,
+				CE38039029E72954000103AA /* Resources.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 				CE6AB46429CD72C000338D9F /* SceneDelegate.swift in Sources */,
 				CE70BC0629DEEC6300CCE277 /* SingleImageViewController.swift in Sources */,
 				CE274F9329D1D9A100F48F8A /* ImagesListCell.swift in Sources */,
+				CE38039129E72954000103AA /* Resources.swift in Sources */,
 				CE274F9129D1D28400F48F8A /* ImagesListViewController.swift in Sources */,
 				CE6AB49229CD881D00338D9F /* UIColor+Extensions.swift in Sources */,
 			);
