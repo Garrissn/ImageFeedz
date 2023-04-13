@@ -20,6 +20,7 @@
 		CE6AB48329CD72C100338D9F /* ImageFeedzUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6AB48229CD72C100338D9F /* ImageFeedzUITests.swift */; };
 		CE6AB48529CD72C100338D9F /* ImageFeedzUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6AB48429CD72C100338D9F /* ImageFeedzUITestsLaunchTests.swift */; };
 		CE6AB49229CD881D00338D9F /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6AB49129CD881D00338D9F /* UIColor+Extensions.swift */; };
+		CE6C5FB329E85BC100803E91 /* SF-Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE6C5FB129E85BC100803E91 /* SF-Pro.ttf */; };
 		CE70BC0629DEEC6300CCE277 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE70BC0529DEEC6300CCE277 /* SingleImageViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,7 @@
 		CE6AB48229CD72C100338D9F /* ImageFeedzUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFeedzUITests.swift; sourceTree = "<group>"; };
 		CE6AB48429CD72C100338D9F /* ImageFeedzUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFeedzUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		CE6AB49129CD881D00338D9F /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		CE6C5FB129E85BC100803E91 /* SF-Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro.ttf"; sourceTree = "<group>"; };
 		CE70BC0529DEEC6300CCE277 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -127,6 +129,7 @@
 		CE6AB46029CD72C000338D9F /* ImageFeedz */ = {
 			isa = PBXGroup;
 			children = (
+				CE6C5FAF29E850E200803E91 /* Fonts */,
 				CE6AB46129CD72C000338D9F /* AppDelegate.swift */,
 				CE6AB46329CD72C000338D9F /* SceneDelegate.swift */,
 				CE5EDF6129DB425E00E47E22 /* Profile */,
@@ -155,6 +158,14 @@
 				CE6AB48429CD72C100338D9F /* ImageFeedzUITestsLaunchTests.swift */,
 			);
 			path = ImageFeedzUITests;
+			sourceTree = "<group>";
+		};
+		CE6C5FAF29E850E200803E91 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				CE6C5FB129E85BC100803E91 /* SF-Pro.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		CE76EA9729D06FC70021D940 /* ImagesList */ = {
@@ -273,6 +284,7 @@
 				CE6AB46E29CD72C100338D9F /* LaunchScreen.storyboard in Resources */,
 				CE6AB46B29CD72C100338D9F /* Assets.xcassets in Resources */,
 				CE6AB46929CD72C000338D9F /* Main.storyboard in Resources */,
+				CE6C5FB329E85BC100803E91 /* SF-Pro.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
