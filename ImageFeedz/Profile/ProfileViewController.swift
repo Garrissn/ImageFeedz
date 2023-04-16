@@ -5,7 +5,7 @@
 //  Created by Игорь Полунин on 04.04.2023.
 //
 
-import Foundation
+
 import UIKit
 
 final class ProfileViewController: UIViewController {
@@ -23,7 +23,7 @@ final class ProfileViewController: UIViewController {
         let logoutButton = UIButton()
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
         logoutButton.setImage(UIImage(named: "logoutButton"), for: UIControl.State())
-        logoutButton.addTarget(ProfileViewController.self,
+        logoutButton.addTarget(self,
                                action: #selector(logoutButtonTapped),
                                for: .touchUpInside)
         return logoutButton
