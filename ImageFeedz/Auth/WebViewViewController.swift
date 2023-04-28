@@ -8,6 +8,11 @@
 import UIKit
 import WebKit
 
+protocol WebViewViewControllerDelegate: AnyObject {
+    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String)
+    func webViewViewControllerDidCancel(_ vc: WebViewViewController)
+}
+
 
 final class WebViewViewController: UIViewController {
     
@@ -25,17 +30,7 @@ final class WebViewViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var urlComponents = URLComponents(string: UnsplashAuthorizeURLString)!
-        urlComponents.queryItems = [
-           URLQueryItem(name: "client_id", value: AccessKey),
-           URLQueryItem(name: "redirect_uri", value: RedirectURI),
-           URLQueryItem(name: "response_type", value: "code"),
-           URLQueryItem(name: "scope", value: AccessScope)
-         ]
-        guard let url = urlComponents.url else { return print ("не удалось получить урл")}
-        
-         let request = URLRequest(url: url)
-         webView.load(request)
+         loadWebView()
          webView.navigationDelegate = self
     }
     
@@ -73,7 +68,7 @@ final class WebViewViewController: UIViewController {
     }
 }
  
-extension WebViewViewController: WKNavigationDelegate {
+extension WebViewViewController: WKNavigationDelegate { // пришел ответ из ансплеш в виде УРЛ, проверяем адрес , делаем выборку ищем код авторизации и передаем его в вебвью
     private func code(from navigationAction: WKNavigationAction) -> String? {
         if let url = navigationAction.request.url,
            let urlComponents = URLComponents(string: url.absoluteString),
@@ -87,14 +82,14 @@ extension WebViewViewController: WKNavigationDelegate {
         }
     }
     
-    func webView(_ webView: WKWebView,
+    func webView(_ webView: WKWebView,//реализация протокола WKNavigationDelegate
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if let code = code(from: navigationAction) {
           
-            delegate?.webViewViewController(self, didAuthenticateWithCode: code)
+            delegate?.webViewViewController(self, didAuthenticateWithCode: code) // делегируем обработку кода авторизации в AuthViewController метод webViewViewController
 
-            decisionHandler(.cancel)
+            decisionHandler(.cancel)  // код авторизации получен
             
         } else {
             decisionHandler(.allow)
@@ -103,7 +98,21 @@ extension WebViewViewController: WKNavigationDelegate {
     
 }
 
-protocol WebViewViewControllerDelegate: AnyObject {
-    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String)
-    func webViewViewControllerDidCancel(_ vc: WebViewViewController)
+private extension WebViewViewController { // собрали юрл реквест для загрузки вебконтента и передали во вьюдидлоад
+    func loadWebView() {
+        var urlComponents = URLComponents(string: UnsplashAuthorizeURLString)!
+        urlComponents.queryItems = [
+           URLQueryItem(name: "client_id", value: AccessKey),
+           URLQueryItem(name: "redirect_uri", value: RedirectURI),
+           URLQueryItem(name: "response_type", value: "code"),
+           URLQueryItem(name: "scope", value: AccessScope)
+         ]
+        guard let url = urlComponents.url else { return print ("не удалось получить урл")}
+        
+         let request = URLRequest(url: url)
+         webView.load(request)
+    }
 }
+
+
+
