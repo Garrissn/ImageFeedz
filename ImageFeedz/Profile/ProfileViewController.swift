@@ -65,9 +65,27 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         addViews()
         layoutViews()
+        fetch()
+    }
+    
+    private func fetch() {
+        guard let token = OAuth2TokenStorage().token else { return print ("")}
+        ProfileService().fetchProfile(token) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success( let profile):
+                descriptionLabel.text = profile.bio
+                nameLabel.text = profile.name
+                loginNameLabel.text = profile.loginName
+            case .failure(let error):
+                assertionFailure(error.localizedDescription)
+            }
+            
+        }
         
     }
     
+        
     private func addViews () {
         view.addSubview(avatarImage)
         view.addSubview(logoutButton)

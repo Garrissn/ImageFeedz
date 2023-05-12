@@ -91,6 +91,7 @@ extension WebViewViewController: WKNavigationDelegate { // пришел отве
 
             decisionHandler(.cancel)  // код авторизации получен
             
+            
         } else {
             decisionHandler(.allow)
         }

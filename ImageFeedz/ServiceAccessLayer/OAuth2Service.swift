@@ -20,10 +20,25 @@ final class OAuth2Service {
         set {
             OAuth2TokenStorage().token = newValue
         }
-        
     }
+    
+    private var task: URLSessionTask?
+    private var lastCode: String?
+    
+    
     func fetchOAuthToken(_ code: String,
                          completion: @escaping (Result<String, Error>) -> Void ) {
+        
+        
+        assert(Thread.isMainThread)
+        
+        if lastCode == code { return }
+        task?.cancel()
+        lastCode = code
+      
+        
+        
+        
         
         let request = authTokenRequest(code: code)
         let task = object(for: request) {[weak self] result in
@@ -36,7 +51,11 @@ final class OAuth2Service {
             case .failure(let error):
                 completion(.failure(error))
             }
+            
         }
+        
+        
+        self.task = task
         task.resume()
     }
 }
@@ -70,8 +89,6 @@ private func authTokenRequest(code: String) -> URLRequest {
 
 // MARK: - HTTP Request
 
-//fileprivate let DefaultBaseURL = URL(string: "https://api.unsplash.com")!
-
 extension URLRequest {
     static func makeHTTPRequest(
         path: String,
@@ -99,7 +116,9 @@ extension URLSession {
             let fulfillCompletion: (Result<Data, Error>) -> Void = { result in
                 DispatchQueue.main.async {
                     completion(result)
+                    
                 }
+                
             }
             
             
@@ -119,7 +138,10 @@ extension URLSession {
                 } else {
                     fulfillCompletion(.failure(NetworkError.urlSessionError))
                 }
-            })
+                
+            }
+                                
+            )
             task.resume()
             return task
         }
