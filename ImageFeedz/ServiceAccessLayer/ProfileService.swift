@@ -26,15 +26,16 @@ final class ProfileService {
                 let name = profileResult.firstName + " " + profileResult.lastName
                 let userName = profileResult.userName
                 let loginName =  "@" + profileResult.userName
-                guard let bio = profileResult.bio else { return print("нет личной информации")}
+                let bio = profileResult.bio
                 
                 let profile = Profile(username: userName,
                                       name: name,
                                       loginName: loginName,
                                       bio: bio)
-                                      
+                    print(" удачный парсинг с токеном")
                 completion(.success(profile))
             case .failure(let error):
+                print("не удачный парсинг с токеном")
                 completion(.failure(error))
             }
         
@@ -49,10 +50,11 @@ final class ProfileService {
             guard let self = self else { return }
             switch result {
             case .success(let profileResult):
-                
-                guard let image = profileResult.profileResultImageUrl?.large else { return print("не удалось получить аватар фото")}
+                print("  удачный парсинг фото")
+               let image = profileResult.profileResultImageUrl.large
                 completion(.success(image))
                            case .failure(let error):
+                print("не удачный парсинг с фото")
                             completion(.failure(error))
             }
         }
@@ -69,14 +71,15 @@ extension ProfileService {
                 switch result {
                 case .success(let data):
                     do {
-                        let object = try decoder.decode(ProfileResult.self, from: data)
-                        completion(.success(object))
+                        let profileResult = try decoder.decode(ProfileResult.self, from: data)
+                        completion(.success(profileResult))
                     } catch {
                         completion(.failure(error))
+                        print("поймали ошибку в кейсе саксес")
                     }
                 case .failure(let error):
                     completion(.failure(error))
-                    
+                    print("ошибка в докодировании")
                     
                 }
             }
@@ -97,12 +100,12 @@ private func profileImageRequest(username: String) -> URLRequest {
     
 }
 
-struct ProfileResult: Codable {
+struct ProfileResult: Decodable {
     let userName: String
     let firstName: String
     let lastName: String
-    let bio: String?
-    let profileResultImageUrl: ProfileResultImageUrl?
+    let bio: String
+    let profileResultImageUrl: ProfileResultImageUrl
     
     enum CodingKeys: String, CodingKey {
         case userName = "username"
@@ -114,16 +117,16 @@ struct ProfileResult: Codable {
     
    
 }
-struct ProfileResultImageUrl: Codable {
-    let small: String?
-    let medium: String?
-    let large: String?
+struct ProfileResultImageUrl: Decodable {
+    let small: String
+    let medium: String
+    let large: String
 }
 struct Profile {
     let username: String
     let name: String
     let loginName: String
-    let bio: String?
+    let bio: String
 }
 
 

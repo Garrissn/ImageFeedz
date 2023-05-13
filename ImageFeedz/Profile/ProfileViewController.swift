@@ -70,7 +70,7 @@ final class ProfileViewController: UIViewController {
     
     private func fetch() {
         guard let token = OAuth2TokenStorage().token else { return print ("")}
-        ProfileService().fetchProfile(token) { [weak self] result in
+        ProfileService.shared.fetchProfile(token) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success( let profile):
@@ -78,7 +78,8 @@ final class ProfileViewController: UIViewController {
                 nameLabel.text = profile.name
                 loginNameLabel.text = profile.loginName
             case .failure(let error):
-                assertionFailure(error.localizedDescription)
+                print("Ошибка ")
+                //assertionFailure(error.localizedDescription)
             }
             
         }
