@@ -11,6 +11,10 @@ import UIKit
 final class ProfileViewController: UIViewController {
     
     // MARK: - Private Properties
+    
+    private let profileService = ProfileService.shared
+    
+    
     private let avatarImage: UIImageView = {
         let image = UIImage(named: "avatar")
         let avatarImage = UIImageView(image: image)
@@ -65,26 +69,21 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         addViews()
         layoutViews()
-        fetch()
+        updateProfileDetails(profile: Profile)
     }
     
-    private func fetch() {
-        guard let token = OAuth2TokenStorage().token else { return print ("")}
-        ProfileService.shared.fetchProfile(token) { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success( let profile):
+    private func updateProfileDetails(profile: Profile?) {
+        profileService.profile
+        
+        
+        guard let profile = profile else { return }
                 descriptionLabel.text = profile.bio
                 nameLabel.text = profile.name
                 loginNameLabel.text = profile.loginName
-            case .failure(let error):
-                print("Ошибка ")
-                //assertionFailure(error.localizedDescription)
+           
             }
             
-        }
-        
-    }
+      
     
         
     private func addViews () {

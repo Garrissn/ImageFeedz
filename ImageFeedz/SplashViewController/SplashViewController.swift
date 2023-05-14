@@ -14,10 +14,12 @@ final class SplashViewController: UIViewController {
     private let ShowAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
     private let oauth2TokenStorage = OAuth2TokenStorage()
     private let oauth2Service = OAuth2Service()
+    private let profileService = ProfileService.shared
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if let _ = oauth2TokenStorage.token {
+        if let token = oauth2TokenStorage.token {
+            fetchProfile(token: token)
             switchToTabBarController()
             
         } else {
@@ -64,6 +66,7 @@ extension SplashViewController: AuthViewControllerDelegate {
         
         dismiss(animated: true) {[weak self] in
             guard let self = self else { return }
+            UIBlockingProgressHUD.show()
             self.fetchOAuthToken(code)
         }
     }
@@ -72,16 +75,34 @@ extension SplashViewController: AuthViewControllerDelegate {
             
             guard let self = self else { return }
             switch result {
-            case .success:
-                self.switchToTabBarController()
-                UIBlockingProgressHUD.dismiss()
+            case .success(let token):
+                self.fetchProfile(token: token)
+                
             case .failure:
                 UIBlockingProgressHUD.dismiss()
-                print("Error")
+                print("Error") //TODO показатьт ошибку
                 break
             }
         }
     }
+    
+    private func fetchProfile(token: String) {
+        profileService.fetchProfile(token) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                 
+                UIBlockingProgressHUD.dismiss()
+                self.switchToTabBarController()
+                
+            case .failure:
+                // TODO показать ошибку
+                UIBlockingProgressHUD.dismiss()
+                break
+            }
+        }
+    }
+    
 }
 
 

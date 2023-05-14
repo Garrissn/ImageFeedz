@@ -11,7 +11,7 @@ final class ProfileService {
     
     static let shared = ProfileService()
     private let urlSession = URLSession.shared
-    
+    private(set) var profile: Profile?
     
     
     func fetchProfile(_ token: String,
@@ -28,30 +28,30 @@ final class ProfileService {
                 let loginName =  "@" + profileResult.userName
                 let bio = profileResult.bio
                 
-                let profile = Profile(username: userName,
+                self.profile = Profile(username: userName,
                                       name: name,
                                       loginName: loginName,
                                       bio: bio)
+                guard let  profile = profile else { return }
+                
                     print(" удачный парсинг с токеном")
                 completion(.success(profile))
             case .failure(let error):
                 print("не удачный парсинг с токеном")
                 completion(.failure(error))
             }
-        
         }
-       
         task.resume()
     }
     
     func fetchImageProfile(userName: String, completion: @escaping (Result<String,Error>) -> Void) {
-        var request = profileImageRequest(username: userName)
+        let request = profileImageRequest(username: userName)
         let task = object(for: request) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let profileResult):
                 print("  удачный парсинг фото")
-               let image = profileResult.profileResultImageUrl.large
+                guard let image = profileResult.profileResultImageUrl?.large else { return print ("no photo")}
                 completion(.success(image))
                            case .failure(let error):
                 print("не удачный парсинг с фото")
@@ -84,9 +84,7 @@ extension ProfileService {
                 }
             }
         }
-    
 }
-
 private func profileRequest(token: String) -> URLRequest {
     URLRequest.makeHTTPRequest(path: "/me",
                                httpMethod: "GET",
@@ -105,7 +103,7 @@ struct ProfileResult: Decodable {
     let firstName: String
     let lastName: String
     let bio: String
-    let profileResultImageUrl: ProfileResultImageUrl
+    let profileResultImageUrl: ProfileResultImageUrl?
     
     enum CodingKeys: String, CodingKey {
         case userName = "username"
