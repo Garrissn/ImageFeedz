@@ -12,6 +12,7 @@ final class ProfileService {
     static let shared = ProfileService()
     private let urlSession = URLSession.shared
     private(set) var profile: Profile?
+
     
     
     func fetchProfile(_ token: String,
@@ -23,15 +24,17 @@ final class ProfileService {
             guard let self = self else { return }
             switch result {
             case .success(let profileResult):
-                let name = profileResult.firstName + " " + profileResult.lastName
+                
+                
+                let name = profileResult.firstName ?? " " + " " + (profileResult.lastName ?? "")
                 let userName = profileResult.userName
                 let loginName =  "@" + profileResult.userName
-                let bio = profileResult.bio
+                let bio = profileResult.bio ?? " "
                 
                 self.profile = Profile(username: userName,
                                       name: name,
                                       loginName: loginName,
-                                      bio: bio)
+                                       bio: bio)
                 guard let  profile = profile else { return }
                 
                     print(" удачный парсинг с токеном")
@@ -100,9 +103,9 @@ private func profileImageRequest(username: String) -> URLRequest {
 
 struct ProfileResult: Decodable {
     let userName: String
-    let firstName: String
-    let lastName: String
-    let bio: String
+    let firstName: String?
+    let lastName: String?
+    let bio: String?
     let profileResultImageUrl: ProfileResultImageUrl?
     
     enum CodingKeys: String, CodingKey {
@@ -116,9 +119,9 @@ struct ProfileResult: Decodable {
    
 }
 struct ProfileResultImageUrl: Decodable {
-    let small: String
-    let medium: String
-    let large: String
+    let small: String?
+    let medium: String?
+    let large: String?
 }
 struct Profile {
     let username: String

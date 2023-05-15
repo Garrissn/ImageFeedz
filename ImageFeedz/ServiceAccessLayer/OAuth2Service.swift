@@ -35,11 +35,6 @@ final class OAuth2Service {
         if lastCode == code { return }
         task?.cancel()
         lastCode = code
-      
-        
-        
-        
-        
         let request = authTokenRequest(code: code)
         let task = object(for: request) {[weak self] result in
             guard let self = self else { return }

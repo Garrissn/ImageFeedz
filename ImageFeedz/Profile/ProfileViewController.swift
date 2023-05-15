@@ -69,11 +69,15 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         addViews()
         layoutViews()
-        updateProfileDetails(profile: Profile)
+        convert()
     }
     
+    
+    private func convert() {
+        
+    }
     private func updateProfileDetails(profile: Profile?) {
-        profileService.profile
+        
         
         
         guard let profile = profile else { return }

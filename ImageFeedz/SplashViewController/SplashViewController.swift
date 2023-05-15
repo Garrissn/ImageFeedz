@@ -91,7 +91,8 @@ extension SplashViewController: AuthViewControllerDelegate {
             guard let self = self else { return }
             switch result {
             case .success:
-                 
+             //
+                
                 UIBlockingProgressHUD.dismiss()
                 self.switchToTabBarController()
                 
