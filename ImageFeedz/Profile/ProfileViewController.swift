@@ -7,13 +7,14 @@
 
 
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
     
     // MARK: - Private Properties
     
     private let profileService = ProfileService.shared
-    
+    private var profileImageServiceObserver: NSObjectProtocol?
     
     private let avatarImage: UIImageView = {
         let image = UIImage(named: "avatar")
@@ -69,16 +70,34 @@ final class ProfileViewController: UIViewController {
         super.viewDidLoad()
         addViews()
         layoutViews()
-        convert()
-    }
-    
-    
-    private func convert() {
+        updateProfileDetails(profile: profileService.profile)
+        profileImageServiceObserver = NotificationCenter.default.addObserver(
+            forName: ProfileImageService.DidChangeNotification,
+            object: nil,
+            queue: .main)  { [weak self] _ in
+            guard let self = self else { return }
+            self.updateAvatar()
+        }
+        updateAvatar()
         
     }
+    
+    private func updateAvatar () {
+        guard let profileImageURL = ProfileImageService.shared.avatarURL else { return }
+        // to do
+        guard let imageURL = URL(string: profileImageURL) else { return }
+        let cache = ImageCache.default
+        cache.diskStorage.config.expiration = .seconds(600)
+        cache.memoryStorage.config.cleanInterval = 30
+        let processor = RoundCornerImageProcessor(cornerRadius: 20)
+        avatarImage.kf.indicatorType = .activity
+        avatarImage.kf.setImage(with: imageURL, placeholder: UIImage(named: "avatar.jpeg"),
+                              options: [.processor(processor)])
+    }
+    
+    
+  
     private func updateProfileDetails(profile: Profile?) {
-        
-        
         
         guard let profile = profile else { return }
                 descriptionLabel.text = profile.bio
