@@ -31,8 +31,8 @@ final class ProfileService {
             case .success(let profileResult):
 
                 let name = (profileResult.firstName ?? " ") + " " + (profileResult.lastName ?? "")
-                let userName = profileResult.userName
-                let loginName =  "@" + profileResult.userName
+                let userName = profileResult.userName ?? " "
+                let loginName =  "@" + (profileResult.userName ?? " ")
                 let bio = profileResult.bio ?? " "
 
                 self.profile = Profile(username: userName,
@@ -93,7 +93,7 @@ private func profileImageRequest(username: String) -> URLRequest {
 }
 
 struct ProfileResult: Decodable {
-    let userName: String
+    let userName: String?
     let firstName: String?
     let lastName: String?
     let bio: String?
@@ -111,10 +111,10 @@ struct ProfileResult: Decodable {
 }
 
 struct Profile {
-    let username: String
-    let name: String
-    let loginName: String
-    let bio: String
+    let username: String?
+    let name: String?
+    let loginName: String?
+    let bio: String?
 }
 
 

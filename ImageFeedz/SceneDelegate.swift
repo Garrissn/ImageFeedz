@@ -17,6 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: scene)
         let splashViewController = SplashViewController()
         window?.rootViewController = splashViewController
+        
         window?.makeKeyAndVisible()
       
         
