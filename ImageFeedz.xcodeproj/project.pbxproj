@@ -34,6 +34,7 @@
 		CE8AC8472A05194F0056D93E /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = CE8AC8462A05194F0056D93E /* ProgressHUD */; };
 		CE91FF9929F6C60A009E49F0 /* OAuth2Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE91FF9829F6C60A009E49F0 /* OAuth2Service.swift */; };
 		CE963B2D29F58AE8009B6146 /* OAuthTokenResponseBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE963B2C29F58AE8009B6146 /* OAuthTokenResponseBody.swift */; };
+		CEA732FF2A1CDDD10039182D /* NetworkLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA732FE2A1CDDD10039182D /* NetworkLayer.swift */; };
 		CEA880FC2A14D0A0003DA06B /* ProfileImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA880FB2A14D0A0003DA06B /* ProfileImageService.swift */; };
 /* End PBXBuildFile section */
 
@@ -83,6 +84,7 @@
 		CE7F4F4129F033B900E60085 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CE91FF9829F6C60A009E49F0 /* OAuth2Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2Service.swift; sourceTree = "<group>"; };
 		CE963B2C29F58AE8009B6146 /* OAuthTokenResponseBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthTokenResponseBody.swift; sourceTree = "<group>"; };
+		CEA732FE2A1CDDD10039182D /* NetworkLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLayer.swift; sourceTree = "<group>"; };
 		CEA880FB2A14D0A0003DA06B /* ProfileImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -156,6 +158,7 @@
 				CE6AB46129CD72C000338D9F /* AppDelegate.swift */,
 				CE6AB46329CD72C000338D9F /* SceneDelegate.swift */,
 				CE7F4F4129F033B900E60085 /* Constants.swift */,
+				CEA732FD2A1CDDA20039182D /* NetworkLayer */,
 				CE91FF9729F6C5CA009E49F0 /* ServiceAccessLayer */,
 				CE77C81929FA8E920065380F /* SplashViewController */,
 				CE963B2B29F58AA9009B6146 /* Models */,
@@ -251,6 +254,14 @@
 				CE963B2C29F58AE8009B6146 /* OAuthTokenResponseBody.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		CEA732FD2A1CDDA20039182D /* NetworkLayer */ = {
+			isa = PBXGroup;
+			children = (
+				CEA732FE2A1CDDD10039182D /* NetworkLayer.swift */,
+			);
+			path = NetworkLayer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -397,6 +408,7 @@
 			files = (
 				CE76C73429F1830300BBEE35 /* WebViewViewController.swift in Sources */,
 				CE36E7362A0BA43F006CDC7A /* ProfileService.swift in Sources */,
+				CEA732FF2A1CDDD10039182D /* NetworkLayer.swift in Sources */,
 				CE68268C29DC4AEF00A969D2 /* ProfileViewController.swift in Sources */,
 				CE7137802A193BB7005A039C /* TabBarController.swift in Sources */,
 				CE91FF9929F6C60A009E49F0 /* OAuth2Service.swift in Sources */,

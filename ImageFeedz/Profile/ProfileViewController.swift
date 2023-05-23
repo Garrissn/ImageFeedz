@@ -15,7 +15,6 @@ final class ProfileViewController: UIViewController {
     
     private let profileService = ProfileService.shared
     private var profileImageServiceObserver: NSObjectProtocol?
-    
     private let avatarImage: UIImageView = {
         let image = UIImage(named: "avatar")
         let avatarImage = UIImageView(image: image)
@@ -61,16 +60,18 @@ final class ProfileViewController: UIViewController {
         return descriptionLabel
     }()
     
-    
-    
-    
-    
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         addViews()
         layoutViews()
+        setupPrifileImageObserver ()
+        updateAvatar()
         updateProfileDetails(profile: profileService.profile)
+    }
+    // MARK: - Private Methods
+    
+    private func setupPrifileImageObserver () {
         profileImageServiceObserver = NotificationCenter.default.addObserver(
             forName: ProfileImageService.DidChangeNotification,
             object: nil,
@@ -78,44 +79,38 @@ final class ProfileViewController: UIViewController {
             guard let self = self else { return }
             self.updateAvatar()
         }
-        updateAvatar()
-        
     }
     
+    
     private func updateAvatar () {
-        guard let profileImageURL = ProfileImageService.shared.avatarURL else { return }
-        // to do
-        guard let imageURL = URL(string: profileImageURL) else { return }
+        guard let profileImageURL = ProfileImageService.shared.avatarURL,
+              let imageURL = URL(string: profileImageURL) else { return }
+        
         let cache = ImageCache.default
         cache.diskStorage.config.expiration = .seconds(600)
         cache.memoryStorage.config.cleanInterval = 30
-        let processor = RoundCornerImageProcessor(cornerRadius: 20)
+        
+        let processor = RoundCornerImageProcessor(cornerRadius: 61)
+        
         avatarImage.kf.indicatorType = .activity
         avatarImage.kf.setImage(with: imageURL, placeholder: UIImage(named: "avatar.jpeg"),
                               options: [.processor(processor)])
     }
     
-    
-  
     private func updateProfileDetails(profile: Profile?) {
         
         guard let profile = profile else { return }
                 descriptionLabel.text = profile.bio
                 nameLabel.text = profile.name
                 loginNameLabel.text = profile.loginName
-           
             }
             
-      
-    
-        
     private func addViews () {
         view.addSubview(avatarImage)
         view.addSubview(logoutButton)
         view.addSubview(nameLabel)
         view.addSubview(loginNameLabel)
         view.addSubview(descriptionLabel)
-        
     }
     
     private func layoutViews () {
@@ -152,6 +147,14 @@ final class ProfileViewController: UIViewController {
     
     @objc
     private func logoutButtonTapped() {
+        let alertController = UIAlertController(title: "Пока,пока!", message: "Уверены что хотите выйти ?", preferredStyle: .alert)
+        let logoutAction = UIAlertAction(title: "Да", style: .default)  { _ in
+            
+        }
+        let cancelAction = UIAlertAction(title: "Нет", style: .cancel, handler: nil)
+        alertController.addAction(logoutAction)
+        alertController.addAction(cancelAction)
+        present(alertController,animated: true, completion: nil)
         print("logoutButtonTapped")
     }
 }

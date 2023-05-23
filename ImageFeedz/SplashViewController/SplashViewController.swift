@@ -17,7 +17,6 @@ final class SplashViewController: UIViewController {
     private let ShowAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
     
     // MARK: - Services
-    
     private let oauth2TokenStorage = OAuth2TokenStorage()
     private let oauth2Service = OAuth2Service()
     private let profileService = ProfileService.shared
@@ -46,6 +45,7 @@ final class SplashViewController: UIViewController {
         super.viewDidAppear(animated)
         if oauth2TokenStorage.token != nil { guard let token = oauth2TokenStorage.token else { return }
             fetchProfile(token: token)
+            print("token est")
         } else {
             self.presentAuthViewController()
             print(" токена нет  переход ауфконтр")
@@ -63,7 +63,7 @@ final class SplashViewController: UIViewController {
     }
     
     // MARK: - Private Methods
-    
+
     private func setupSplashScreenLogo() {
         NSLayoutConstraint.activate([
             splashScreenImage.heightAnchor.constraint(equalToConstant: 77),

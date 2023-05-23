@@ -8,27 +8,30 @@
 import Foundation
 
 final class ProfileImageService {
+    // MARK: - Constants
+    
     static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     static let shared =  ProfileImageService()
     
+    // MARK: - Private Properties
+    
     private (set) var avatarURL: String?
-    private let urlSession = URLSession.shared
+    private let networkLayer = NetworkLayer.shared
     private var currentTask: URLSessionTask?
+    
+    // MARK: - Services
     
     func fetchProfileImageURL(username: String, _ complition: @escaping(Result<String,Error> ) -> Void) {
         assert(Thread.isMainThread)
         if currentTask != nil {currentTask?.cancel() }
-        
-        
         var request = profileImageRequest(username: username)
         if let token = OAuth2TokenStorage().token { request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization") }
-        let task = urlSession.objectTask(for: request) {[weak self] (result: Result<UserResult, Error>) in
-         
+        let task = networkLayer.objectTask(for: request) {[weak self] (result: Result<UserResult, Error>) in
             guard let self = self else { return }
             
             switch result {
             case .success(let userResult):
-                guard  let avatarURL = userResult.profileResultImageUrl?.small else { return  avatarURL = " "}
+                guard  let avatarURL = userResult.profileResultImageUrl?.medium else { return  avatarURL = " "}
                 self.avatarURL = avatarURL
                 print(" est avatar")
                 complition(.success(avatarURL))
@@ -40,23 +43,23 @@ final class ProfileImageService {
             case .failure(let error):
                 print("net avatar")
                 complition(.failure(error))
-                
             }
             self.currentTask = nil
-            
         }
         self.currentTask = task
         task.resume()
-        
     }
 }
 
+// MARK: - Request
 
 private func profileImageRequest(username: String) -> URLRequest {
     URLRequest.makeHTTPRequest(path: "/users/\(username)",
                                httpMethod: "GET",
                                baseURL: URL(string: "https://api.unsplash.com")!)
 }
+
+// MARK: - Models
 
 struct UserResult: Decodable {
     let profileResultImageUrl: ProfileResultImageUrl?
@@ -66,5 +69,5 @@ struct UserResult: Decodable {
     }
 }
 struct ProfileResultImageUrl: Decodable {
-    let small: String?
+    let medium: String?
 }
