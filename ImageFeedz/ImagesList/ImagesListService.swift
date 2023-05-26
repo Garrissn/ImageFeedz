@@ -9,13 +9,15 @@ import Foundation
 import UIKit
 
 final class ImagesListService {
-    
+    static let shared = ImagesListService()
     static let DidChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
     
     private (set) var photos: [Photo] = []
     private var lastLoadedPage: Int?
     private var task: URLSessionTask?
     private var perPage = 10
+    
+    private var imagesListServiceObserver: NSObjectProtocol?
     
     private let networkLayer = NetworkLayer.shared
     private(set) var photo: Photo?
@@ -26,25 +28,19 @@ final class ImagesListService {
         return formatter
     }()
     
-
-    func tableView( _ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAtindexPath: IndexPath ) {
-        guard  let indexPath = tableView.indexPathForSelectedRow else { return }
-        if indexPath.row + 1 == photos.count {
-            fetchPhotosNextPage()
-            //завершено скачивание отправить запрос на скачивание следующей
-           
-        }
-        
-    }
-    private func fetchPhotosNextPage (){
+    
+   
+   
+    
+    func fetchPhotosNextPage (){
         assert(Thread.isMainThread)
-        
+        print(" вызвали фэчфото")
         guard task == nil else { return } // идет ли сейчас загрузка? или нужно создать новый запрос?
         
-        let nextPage = lastLoadedPage ?? 0 + 1 // какую страницу загружать?
-        let request = photosRequest(page: nextPage, perPage: perPage)
-        
-        let task = networkLayer.objectTask(for: request) {[weak self] (result: Result<[PhotoResult], Error>) in
+        let nextPage = (lastLoadedPage ?? 0) + 1 // какую страницу загружать?
+        var request = photosRequest(page: nextPage, perPage: perPage)
+        if let token = OAuth2TokenStorage().token { request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization") }
+        self.task = networkLayer.objectTask(for: request) {[weak self] (result: Result<[PhotoResult], Error>) in
             guard let self = self else { return }
             
             self.task = nil  // Сброс текущей задачи после завершения
@@ -66,15 +62,15 @@ final class ImagesListService {
                                  thumbImageURL: thumbImageURL,
                                  largeImageURL: largeImageURL,
                                  isLiked: isLiked)
+                
                 }
                 
                 DispatchQueue.main.async {
                     self.photos.append(contentsOf: newPhotos)  // сохранить в var photos: [Photo] = []
-                    
-                    
+                    print(" получили экз фото т фото резалт")
                     NotificationCenter.default
                         .post(
-                            name: ProfileImageService.DidChangeNotification,
+                            name: ImagesListService.DidChangeNotification,
                             object: self,
                             userInfo: ["newphotos": newPhotos])
                 }
@@ -83,8 +79,8 @@ final class ImagesListService {
                 print("Error fetching photos: \(error)")
             }
         }
-       
-        task.resume()
+        
+        task?.resume()
         
     }
 }
@@ -93,19 +89,21 @@ final class ImagesListService {
 
 
 private func photosRequest(page: Int, perPage: Int) -> URLRequest {
-    URLRequest.makeHTTPRequest(path: "/photos?"
-                               + "page =\(page)"
-                               + "&&per_page=\(perPage)",
-                               httpMethod: "GET",
-                               baseURL: URL(string: "https://api.unsplash.com")!)
-    
+    return URLRequest.makeHTTPRequest(path: "/photos?"
+                                      + "page=\(page)"
+                                      + "&per_page=\(perPage)",
+                                      httpMethod: "GET",
+                                      baseURL: URL(string: "https://api.unsplash.com")!)
 }
+
+
+
 
 struct PhotoResult: Decodable {
     let id: String
     let width: Int
     let height: Int
-    let createdAt: Date?
+    let createdAt: String?
     let description: String?
     let likedByUser: Bool?
     let urls: UrlsResult?
@@ -131,7 +129,7 @@ struct PhotoResult: Decodable {
 struct Photo {
     let id: String
     let size: CGSize?
-    let createdAt: Date?
+    let createdAt: String?
     let welcomeDescription: String?
     let thumbImageURL: String?
     let largeImageURL: String?
