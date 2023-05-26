@@ -145,6 +145,9 @@ extension ImagesListViewController {
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         
+        
+        
+        
         //cell.cellImage.image = image
         cell.labelData.text = dateFormatter.string(from: Date())
         
