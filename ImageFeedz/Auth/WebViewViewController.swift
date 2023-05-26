@@ -17,7 +17,7 @@ protocol WebViewViewControllerDelegate: AnyObject {
 final class WebViewViewController: UIViewController {
     
     fileprivate let UnsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
-    
+    private var estimatedProgressObservation: NSKeyValueObservation?
     
     @IBOutlet private weak var progressView: UIProgressView!
     @IBOutlet private weak var webView: WKWebView!
@@ -32,6 +32,12 @@ final class WebViewViewController: UIViewController {
         
          loadWebView()
          webView.navigationDelegate = self
+         estimatedProgressObservation = webView.observe(\.estimatedProgress,
+                                                        options: [],
+                                                        changeHandler: { [weak self] _, _ in
+            guard let self = self else { return }
+            self.updateProgress()
+        })
     }
     
     @IBAction private func didTapBackButton(_ sender: Any?) {
@@ -39,29 +45,31 @@ final class WebViewViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        webView.addObserver(self,
-                            forKeyPath: #keyPath(WKWebView.estimatedProgress),
-                            options: .new,
-                            context: nil)
-        updateProgress()
+
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), context: nil)
+      
     }
     
-   
     
-    override func observeValue(forKeyPath keyPath: String?,
-                               of object: Any?,
-                               change: [NSKeyValueChangeKey : Any]?,
-                               context: UnsafeMutableRawPointer?) {
-        if keyPath == #keyPath(WKWebView.estimatedProgress) {
-            updateProgress()
-        } else {
-            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
-        }
+    private func observe<Root,Value>(
+        _ keyPath: KeyPath<Root,Value>,
+        options: NSKeyValueObservingOptions = [],
+        changeHandler: @escaping (Root, NSKeyValueObservedChange<Value>) -> Void
+        
+    ) -> NSKeyValueObservation {
+        return observe(keyPath, options: options, changeHandler: changeHandler)
+//            if keyPath == \WKWebView.estimatedProgress {
+//                self.updateProgress()
+//            }
+//
+           
+            
+        
     }
+    
+
     private func updateProgress() {
         progressView.progress = Float(webView.estimatedProgress)
         progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
@@ -90,6 +98,7 @@ extension WebViewViewController: WKNavigationDelegate { // пришел отве
             delegate?.webViewViewController(self, didAuthenticateWithCode: code) // делегируем обработку кода авторизации в AuthViewController метод webViewViewController
 
             decisionHandler(.cancel)  // код авторизации получен
+            
             
         } else {
             decisionHandler(.allow)

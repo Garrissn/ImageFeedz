@@ -21,19 +21,18 @@ final class AuthViewController: UIViewController {
             else { fatalError("Failed to prepare for \(ShowWebViewSegueIdentifier)") }
             webViewViewController.delegate = self
         } else {
-                super.prepare(for: segue, sender: sender)
-            }
+            super.prepare(for: segue, sender: sender)
         }
     }
+}
 
 
 
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        //TODO: process code
+        
         delegate?.authViewController(self, didAuthenticateWithCode: code)
-       
-
+        
     }
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
         dismiss(animated: true)
