@@ -31,7 +31,7 @@ final class ImagesListViewController: UIViewController {
         super.viewDidLoad()
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         setupImageListServiceObserver ()
-        //imagesListService.fetchPhotosNextPage()
+       // updateTableViewAnimated()
         
     }
     
@@ -39,12 +39,17 @@ final class ImagesListViewController: UIViewController {
         if segue.identifier == showSingleImageSegueIdentifier {
             let viewController = segue.destination as! SingleImageViewController
             let indexPath = sender as! IndexPath
-            guard let image = UIImage(named:  photos[indexPath.row].thumbImageURL ?? "") else { return print(" Error")}
-            viewController.image = image
+            
+            let photo = photos[indexPath.row]
+            
+            guard let imageURL = URL(string: photo.largeImageURL!) else { return }
+            
+            // TODO viewController.imageURL = imageURL
         } else {
             super.prepare(for: segue, sender: sender)
         }
     }
+    
     
     private func setupImageListServiceObserver () {
         imageListPhotoServiceObserver = NotificationCenter.default.addObserver(
@@ -52,23 +57,26 @@ final class ImagesListViewController: UIViewController {
             object: nil,
             queue: .main)  { [weak self] _ in
             guard let self = self else { return }
-                self.photos = self.imagesListService.photos
+        
             self.updateTableViewAnimated()
         }
+        imagesListService.fetchPhotosNextPage()
+        
     }
        func updateTableViewAnimated() {
            let oldCount = photos.count
+           print(" счетчик начальный \(oldCount)")
            let newCount = imagesListService.photos.count
+           print(" счетчик новый после присвоения  \(newCount)")
            photos = imagesListService.photos
+           print(" счетчик новый после присвоения2  \(photos.count)")
            if oldCount != newCount {
                tableView.performBatchUpdates {
                    let indexPaths = (oldCount..<newCount).map { i in
                        IndexPath(row: i, section: 0)
                    }
                    tableView.insertRows(at: indexPaths, with: .automatic)
-               } completion: {[weak self] _ in
-                   self?.imagesListService.fetchPhotosNextPage()
-               }
+               } completion: {  _ in }
            }
        }
 }
@@ -84,6 +92,7 @@ extension ImagesListViewController: UITableViewDataSource {
         guard let imageListCell = cell as? ImagesListCell else {
             return UITableViewCell()
         }
+        
         configCell(for: imageListCell,with: indexPath)
         return imageListCell
     }
@@ -100,9 +109,7 @@ extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         
-        guard let image = UIImage(named: photos[indexPath.row].thumbImageURL ?? " ") else {
-            return 0
-        }
+        let image = photos[indexPath.row]
         let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
         let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
         let imageWidth = image.size.width
@@ -111,38 +118,37 @@ extension ImagesListViewController: UITableViewDelegate {
         return cellHeight
     }
     
-    func tableView( _ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAtindexPath: IndexPath ) {
-        guard  let indexPath = tableView.indexPath(for: cell) else { return }
+    func tableView( _ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath ) {
+     
         print(" вызвали фэчфото0")
-        if indexPath.row + 1 == photos.count {
+        if indexPath.row + 1 == imagesListService.photos.count {
             imagesListService.fetchPhotosNextPage()
             print(" вызвали фэчфото1")
-            //завершено скачивание отправить запрос на скачивание следующей
+            
         }
         print(" вызвали фэчфото2")
     }
-    
 }
 
 extension ImagesListViewController {
     
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-//        guard  let image = UIImage(named: photos[indexPath.row]) else {
-//            return
-//        }
+       
+        let image = photos[indexPath.row]
         
-        guard let photoImageURL = URL(string: photos[indexPath.row].thumbImageURL!)
-              //let imageURL = URL(string: photoImageURL)
-                                      else { return print(" ne udalos sdelat url v imageslistviewcontr")}
+        
+        guard let thumbUrlString = image.thumbImageURL,
+              let url = URL(string: thumbUrlString) else { return }
+        
+//
         
         let cache = ImageCache.default
         cache.diskStorage.config.expiration = .seconds(600)
         cache.memoryStorage.config.cleanInterval = 30
         cell.cellImage.kf.indicatorType = .activity
      
-        cell.cellImage.kf.setImage(with: photoImageURL, placeholder: UIImage(named: "Rectangle.jpeg")) {  [weak self] _ in
-            guard let self = self else { return }
-            self.tableView.reloadRows(at: [indexPath], with: .automatic)
+        cell.cellImage.kf.setImage(with: url, placeholder: UIImage(named: "Rectangle.jpeg")) {  [weak self] _ in
+            self?.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         
         

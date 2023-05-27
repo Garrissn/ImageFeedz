@@ -15,22 +15,17 @@ final class ImagesListService {
     private (set) var photos: [Photo] = []
     private var lastLoadedPage: Int?
     private var task: URLSessionTask?
-    private var perPage = 10
     
+    private var currentPage = 1
     private var imagesListServiceObserver: NSObjectProtocol?
     
     private let networkLayer = NetworkLayer.shared
     private(set) var photo: Photo?
-    private lazy var dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .long
-        formatter.timeStyle = .none
-        return formatter
-    }()
     
     
-   
-   
+    
+    
+    
     
     func fetchPhotosNextPage (){
         assert(Thread.isMainThread)
@@ -38,7 +33,8 @@ final class ImagesListService {
         guard task == nil else { return } // идет ли сейчас загрузка? или нужно создать новый запрос?
         
         let nextPage = (lastLoadedPage ?? 0) + 1 // какую страницу загружать?
-        var request = photosRequest(page: nextPage, perPage: perPage)
+        print(" счетчик некст пейдж\(nextPage)")
+        var request = photosRequest(page: nextPage)
         if let token = OAuth2TokenStorage().token { request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization") }
         self.task = networkLayer.objectTask(for: request) {[weak self] (result: Result<[PhotoResult], Error>) in
             guard let self = self else { return }
@@ -46,8 +42,8 @@ final class ImagesListService {
             self.task = nil  // Сброс текущей задачи после завершения
             switch result {
                 
-            case .success(let photoResult):
-                let newPhotos = photoResult.map { photoResult -> Photo in
+            case .success(let photoResults):
+                let newPhotos = photoResults.map { photoResult -> Photo in
                     let id = photoResult.id
                     let size = CGSize(width: photoResult.width, height: photoResult.height)
                     let createdAt = photoResult.createdAt
@@ -55,45 +51,44 @@ final class ImagesListService {
                     let thumbImageURL = photoResult.urls?.thumb ?? " "
                     let largeImageURL = photoResult.urls?.full ?? " "
                     let isLiked = photoResult.likedByUser ?? false
-                    return Photo(id: id,
-                                 size: size,
-                                 createdAt: createdAt,
-                                 welcomeDescription: welcomeDescription,
-                                 thumbImageURL: thumbImageURL,
-                                 largeImageURL: largeImageURL,
-                                 isLiked: isLiked)
-                
+                   
+                    return  Photo(id: id, size: size, createdAt: createdAt, welcomeDescription: welcomeDescription, thumbImageURL: thumbImageURL, largeImageURL: largeImageURL, isLiked: isLiked)
+                    
                 }
                 
-                DispatchQueue.main.async {
-                    self.photos.append(contentsOf: newPhotos)  // сохранить в var photos: [Photo] = []
-                    print(" получили экз фото т фото резалт")
-                    NotificationCenter.default
-                        .post(
-                            name: ImagesListService.DidChangeNotification,
-                            object: self,
-                            userInfo: ["newphotos": newPhotos])
-                }
-                self.lastLoadedPage = nextPage //сохранить номер последней скачанной страницы
-            case .failure(let error):
-                print("Error fetching photos: \(error)")
+            
+            DispatchQueue.main.async {
+                 
+                self.photos.append(contentsOf: newPhotos)
+                print(" получили экз фото т фото резалт")
+                NotificationCenter.default
+                    .post(
+                        name: ImagesListService.DidChangeNotification,
+                        object: self,
+                        userInfo: ["newphotos": self.photos])
             }
+            self.lastLoadedPage = nextPage //сохранить номер последней скачанной страницы
+        case .failure(let error):
+            print("Error fetching photos: \(error)")
         }
-        
-        task?.resume()
-        
     }
+    
+    task?.resume()
+    
+}
 }
 
 
 
 
-private func photosRequest(page: Int, perPage: Int) -> URLRequest {
+private func photosRequest(page: Int) -> URLRequest {
+    print(" сделали реквест")
     return URLRequest.makeHTTPRequest(path: "/photos?"
                                       + "page=\(page)"
-                                      + "&per_page=\(perPage)",
+                                      + "&per_page=10",
                                       httpMethod: "GET",
                                       baseURL: URL(string: "https://api.unsplash.com")!)
+    
 }
 
 
@@ -128,7 +123,7 @@ struct PhotoResult: Decodable {
 
 struct Photo {
     let id: String
-    let size: CGSize?
+    let size: CGSize
     let createdAt: String?
     let welcomeDescription: String?
     let thumbImageURL: String?
