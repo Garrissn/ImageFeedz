@@ -63,6 +63,7 @@ final class ProfileViewController: UIViewController {
     }()
     
     // MARK: - View Life Cycle
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         addViews()
@@ -71,6 +72,8 @@ final class ProfileViewController: UIViewController {
         updateAvatar()
         updateProfileDetails(profile: profileService.profile)
     }
+    
+    
     // MARK: - Private Methods
     
     private func setupPrifileImageObserver () {

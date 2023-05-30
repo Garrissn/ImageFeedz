@@ -27,6 +27,7 @@ final class ImagesListCell: UITableViewCell {
         super.prepareForReuse()
         
         // otmeniaem zagruzku
+        cellImage.image = nil
         cellImage.kf.cancelDownloadTask()
     }
     
