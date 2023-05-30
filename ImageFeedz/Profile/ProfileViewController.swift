@@ -8,12 +8,14 @@
 
 import UIKit
 import Kingfisher
+import WebKit
 
 final class ProfileViewController: UIViewController {
     
     // MARK: - Private Properties
     
     private let profileService = ProfileService.shared
+    private let tokenStorage = OAuth2TokenStorage()
     private var profileImageServiceObserver: NSObjectProtocol?
     private let avatarImage: UIImageView = {
         let image = UIImage(named: "avatar")
@@ -76,9 +78,9 @@ final class ProfileViewController: UIViewController {
             forName: ProfileImageService.DidChangeNotification,
             object: nil,
             queue: .main)  { [weak self] _ in
-            guard let self = self else { return }
-            self.updateAvatar()
-        }
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
     }
     
     
@@ -94,17 +96,17 @@ final class ProfileViewController: UIViewController {
         
         avatarImage.kf.indicatorType = .activity
         avatarImage.kf.setImage(with: imageURL, placeholder: UIImage(named: "avatar.jpeg"),
-                              options: [.processor(processor)])
+                                options: [.processor(processor)])
     }
     
     private func updateProfileDetails(profile: Profile?) {
         
         guard let profile = profile else { return }
-                descriptionLabel.text = profile.bio
-                nameLabel.text = profile.name
-                loginNameLabel.text = profile.loginName
-            }
-            
+        descriptionLabel.text = profile.bio
+        nameLabel.text = profile.name
+        loginNameLabel.text = profile.loginName
+    }
+    
     private func addViews () {
         view.addSubview(avatarImage)
         view.addSubview(logoutButton)
@@ -145,10 +147,20 @@ final class ProfileViewController: UIViewController {
     }
     
     
+
+    
     @objc
     private func logoutButtonTapped() {
         let alertController = UIAlertController(title: "Пока,пока!", message: "Уверены что хотите выйти ?", preferredStyle: .alert)
         let logoutAction = UIAlertAction(title: "Да", style: .default)  { _ in
+            self.tokenStorage.cleanToken()
+            WebViewViewController.clean()
+            guard let window = UIApplication.shared.windows.first else {
+                fatalError("Invalid Configuration")
+            }
+            let splashViewController = SplashViewController()
+            window.rootViewController = splashViewController
+            window.makeKeyAndVisible()
             
         }
         let cancelAction = UIAlertAction(title: "Нет", style: .cancel, handler: nil)

@@ -18,10 +18,17 @@ final class ImagesListViewController: UIViewController {
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
     private var imagesListService = ImagesListService.shared
     private var photos: [Photo] = []
+    private lazy var isoDateFormatter: ISO8601DateFormatter = {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withFullDate, .withDashSeparatorInDate]
+        return formatter
+    }()
     private lazy var dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .none
+        formatter.locale = Locale(identifier: "ru_RU")
+        formatter.dateFormat = "d MMMM yyyy"
         return formatter
     }()
     
@@ -41,10 +48,10 @@ final class ImagesListViewController: UIViewController {
             let indexPath = sender as! IndexPath
             
             let photo = photos[indexPath.row]
+            let image = photo.largeImageURL
+            guard let imageURL = URL(string: image ?? " " ) else { return }
             
-            guard let imageURL = URL(string: photo.largeImageURL!) else { return }
-            
-            // TODO viewController.imageURL = imageURL
+             viewController.imageURL = imageURL
         } else {
             super.prepare(for: segue, sender: sender)
         }
@@ -120,45 +127,70 @@ extension ImagesListViewController: UITableViewDelegate {
     
     func tableView( _ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath ) {
      
-        print(" вызвали фэчфото0")
+        
         if indexPath.row + 1 == imagesListService.photos.count {
             imagesListService.fetchPhotosNextPage()
             print(" вызвали фэчфото1")
             
         }
-        print(" вызвали фэчфото2")
+        
     }
 }
 
 extension ImagesListViewController {
     
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
-       
+        cell.delegate = self
+        
         let image = photos[indexPath.row]
-        
-        
         guard let thumbUrlString = image.thumbImageURL,
               let url = URL(string: thumbUrlString) else { return }
-        
-//
         
         let cache = ImageCache.default
         cache.diskStorage.config.expiration = .seconds(600)
         cache.memoryStorage.config.cleanInterval = 30
         cell.cellImage.kf.indicatorType = .activity
-     
+        
         cell.cellImage.kf.setImage(with: url, placeholder: UIImage(named: "Rectangle.jpeg")) {  [weak self] _ in
             self?.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         
+        if let createdAt = image.createdAt,
+           let date = isoDateFormatter.date(from: createdAt) {
+                
+                let formattedDate = dateFormatter.string(from: date)
+                cell.labelData.text = formattedDate
+            
+            } else { cell.labelData.text = " Error date"}
         
-        
-        
-        //cell.cellImage.image = image
-        cell.labelData.text = dateFormatter.string(from: Date())
-        
-        let isLiked = indexPath.row % 2 == 0
-        let likedImage = isLiked ? UIImage(named: "likeOff") : UIImage(named: "likeOn")
+      
+        let likedImage =  UIImage(named: "likeOff")
         cell.likeButton.setImage(likedImage, for: .normal)
     }
+}
+extension ImagesListViewController: ImagesListCellDelegate {
+    func imageListCellDidTapLike(_ cell: ImagesListCell) { // получили номер нажатой ячейки
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let photo = photos[indexPath.row] // по номеру ячейуи нашли номер фото в массиве и передали в вызов сервиса по смене лайка
+        UIBlockingProgressHUD.show()
+        imagesListService.changeLike(photoId: photo.id, isLike: photo.isLiked) { result in
+            
+            switch result {
+            case .success(let photoResult):
+                
+                self.photos = self.imagesListService.photos
+                
+                cell.setIsLiked(islike: self.photos[indexPath.row].isLiked)
+                UIBlockingProgressHUD.dismiss()
+            case .failure:
+                UIBlockingProgressHUD.dismiss()
+                print(" alertcontr")
+            }
+        }
+    }
+    
+    
+}
+protocol ImagesListCellDelegate: AnyObject {
+    func imageListCellDidTapLike(_ cell: ImagesListCell)
 }

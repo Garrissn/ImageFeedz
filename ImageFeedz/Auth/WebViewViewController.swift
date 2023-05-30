@@ -8,51 +8,39 @@
 import UIKit
 import WebKit
 
-protocol WebViewViewControllerDelegate: AnyObject {
-    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String)
-    func webViewViewControllerDidCancel(_ vc: WebViewViewController)
-}
+
 
 
 final class WebViewViewController: UIViewController {
     
+    // MARK: - Private Properties
+    
     fileprivate let UnsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
     private var estimatedProgressObservation: NSKeyValueObservation?
+    weak var delegate: WebViewViewControllerDelegate?
     
     @IBOutlet private weak var progressView: UIProgressView!
     @IBOutlet private weak var webView: WKWebView!
+    @IBAction private func didTapBackButton(_ sender: Any?) {
+        delegate?.webViewViewControllerDidCancel(self)
+    }
     
-     weak var delegate: WebViewViewControllerDelegate?
-  
-    
-    
+    // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-         loadWebView()
-         webView.navigationDelegate = self
-         estimatedProgressObservation = webView.observe(\.estimatedProgress,
+        loadWebView()
+        webView.navigationDelegate = self
+        estimatedProgressObservation = webView.observe(\.estimatedProgress,
                                                         options: [],
                                                         changeHandler: { [weak self] _, _ in
             guard let self = self else { return }
             self.updateProgress()
         })
     }
-    
-    @IBAction private func didTapBackButton(_ sender: Any?) {
-        delegate?.webViewViewControllerDidCancel(self)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-
-    }
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-      
-    }
-    
-    
+    // MARK: - Private Methods
+   
     private func observe<Root,Value>(
         _ keyPath: KeyPath<Root,Value>,
         options: NSKeyValueObservingOptions = [],
@@ -60,22 +48,19 @@ final class WebViewViewController: UIViewController {
         
     ) -> NSKeyValueObservation {
         return observe(keyPath, options: options, changeHandler: changeHandler)
-//            if keyPath == \WKWebView.estimatedProgress {
-//                self.updateProgress()
-//            }
-//
-           
-            
-        
+        //            if keyPath == \WKWebView.estimatedProgress {
+        //                self.updateProgress()
+        //            }
+        //
     }
     
-
+    
     private func updateProgress() {
         progressView.progress = Float(webView.estimatedProgress)
         progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
     }
 }
- 
+
 extension WebViewViewController: WKNavigationDelegate { // пришел ответ из ансплеш в виде УРЛ, проверяем адрес , делаем выборку ищем код авторизации и передаем его в вебвью
     private func code(from navigationAction: WKNavigationAction) -> String? {
         if let url = navigationAction.request.url,
@@ -94,12 +79,10 @@ extension WebViewViewController: WKNavigationDelegate { // пришел отве
                  decidePolicyFor navigationAction: WKNavigationAction,
                  decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if let code = code(from: navigationAction) {
-          
+            
             delegate?.webViewViewController(self, didAuthenticateWithCode: code) // делегируем обработку кода авторизации в AuthViewController метод webViewViewController
-
+            
             decisionHandler(.cancel)  // код авторизации получен
-            
-            
         } else {
             decisionHandler(.allow)
         }
@@ -111,17 +94,32 @@ private extension WebViewViewController { // собрали юрл реквес�
     func loadWebView() {
         var urlComponents = URLComponents(string: UnsplashAuthorizeURLString)!
         urlComponents.queryItems = [
-           URLQueryItem(name: "client_id", value: AccessKey),
-           URLQueryItem(name: "redirect_uri", value: RedirectURI),
-           URLQueryItem(name: "response_type", value: "code"),
-           URLQueryItem(name: "scope", value: AccessScope)
-         ]
+            URLQueryItem(name: "client_id", value: AccessKey),
+            URLQueryItem(name: "redirect_uri", value: RedirectURI),
+            URLQueryItem(name: "response_type", value: "code"),
+            URLQueryItem(name: "scope", value: AccessScope)
+        ]
         guard let url = urlComponents.url else { return print ("не удалось получить урл")}
         
-         let request = URLRequest(url: url)
-         webView.load(request)
+        let request = URLRequest(url: url)
+        webView.load(request)
     }
 }
 
+extension WebViewViewController {
+    static func clean() {
+        // Очищаем все куки из хранилища.
+        HTTPCookieStorage.shared.removeCookies(since: Date.distantPast)
+        WKWebsiteDataStore.default().fetchDataRecords(ofTypes: WKWebsiteDataStore.allWebsiteDataTypes()) { records in
+            
+            records.forEach { record in
+                WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
+            }
+        }
+    }
+}
 
-
+protocol WebViewViewControllerDelegate: AnyObject {
+    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String)
+    func webViewViewControllerDidCancel(_ vc: WebViewViewController)
+}

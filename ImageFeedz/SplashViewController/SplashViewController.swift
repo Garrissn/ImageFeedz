@@ -127,7 +127,7 @@ extension SplashViewController: AuthViewControllerDelegate {
         let alertController = UIAlertController(title: "Что-то пошло не так(", message: "Не удалось войти в систему", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Ok", style: .default) { [weak self] _ in
             guard let self = self else { return }
-            self.performSegue(withIdentifier: ShowAuthenticationScreenSegueIdentifier, sender: nil)
+            self.presentAuthViewController()
         }
         alertController.addAction(okAction)
         present(alertController, animated: true, completion: nil)
