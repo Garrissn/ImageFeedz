@@ -61,7 +61,8 @@ final class SingleImageViewController: UIViewController {
     }
     private func showError () {
         let alertController = UIAlertController(title: "Что-то пошло не так", message: "Попробовать ещё раз?", preferredStyle: .alert)
-        let againAction = UIAlertAction(title: "Повторить?", style: .default) { _ in
+        let againAction = UIAlertAction(title: "Повторить?", style: .default) { [weak self] _ in
+            guard let self = self else { return }
             self.setLargeImage()
         }
         let nenadoAction = UIAlertAction(title: "Не надо", style: .default, handler: nil)

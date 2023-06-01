@@ -48,10 +48,7 @@ final class WebViewViewController: UIViewController {
         
     ) -> NSKeyValueObservation {
         return observe(keyPath, options: options, changeHandler: changeHandler)
-        //            if keyPath == \WKWebView.estimatedProgress {
-        //                self.updateProgress()
-        //            }
-        //
+       
     }
     
     

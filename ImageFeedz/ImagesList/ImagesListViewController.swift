@@ -168,6 +168,7 @@ extension ImagesListViewController {
         cell.likeButton.setImage(likedImage, for: .normal)
     }
 }
+
 extension ImagesListViewController: ImagesListCellDelegate {
     func imageListCellDidTapLike(_ cell: ImagesListCell) { // получили номер нажатой ячейки
         guard let indexPath = tableView.indexPath(for: cell) else { return }
@@ -179,13 +180,13 @@ extension ImagesListViewController: ImagesListCellDelegate {
             case .success(let photoResult):
                 
                 self.photos = self.imagesListService.photos
-                
                 cell.setIsLiked(islike: self.photos[indexPath.row].isLiked)
-                UIBlockingProgressHUD.dismiss()
+               
             case .failure:
-                UIBlockingProgressHUD.dismiss()
                 print(" alertcontr")
             }
+            UIBlockingProgressHUD.dismiss()
+            
         }
     }
     
