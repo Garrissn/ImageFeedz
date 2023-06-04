@@ -46,9 +46,6 @@ final class WebViewPresenter: WebViewPresenterProtocol {
         abs(value - 1.0) <= 0.0001
     }
     
-    
-    
-    
     func code(from url: URL) -> String? {
         authHelper.code(from: url)
     }
