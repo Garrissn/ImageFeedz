@@ -41,6 +41,7 @@
 		CE963B2D29F58AE8009B6146 /* OAuthTokenResponseBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE963B2C29F58AE8009B6146 /* OAuthTokenResponseBody.swift */; };
 		CEA732FF2A1CDDD10039182D /* NetworkLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA732FE2A1CDDD10039182D /* NetworkLayer.swift */; };
 		CEA880FC2A14D0A0003DA06B /* ProfileImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA880FB2A14D0A0003DA06B /* ProfileImageService.swift */; };
+		CEBD8B562A321692004D89FD /* ImagesListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEBD8B552A321692004D89FD /* ImagesListPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,6 +105,7 @@
 		CE963B2C29F58AE8009B6146 /* OAuthTokenResponseBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthTokenResponseBody.swift; sourceTree = "<group>"; };
 		CEA732FE2A1CDDD10039182D /* NetworkLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLayer.swift; sourceTree = "<group>"; };
 		CEA880FB2A14D0A0003DA06B /* ProfileImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageService.swift; sourceTree = "<group>"; };
+		CEBD8B552A321692004D89FD /* ImagesListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -264,6 +266,7 @@
 				CE274F9029D1D28400F48F8A /* ImagesListViewController.swift */,
 				CE274F9229D1D9A100F48F8A /* ImagesListCell.swift */,
 				CE5710792A1F694C00204192 /* ImagesListService.swift */,
+				CEBD8B552A321692004D89FD /* ImagesListPresenter.swift */,
 			);
 			path = ImagesList;
 			sourceTree = "<group>";
@@ -505,6 +508,7 @@
 				CE6AB49229CD881D00338D9F /* UIColor+Extensions.swift in Sources */,
 				CE76C73229F1793D00BBEE35 /* AuthViewController.swift in Sources */,
 				CE6FFD6829F9089C00C5E94F /* OAuth2TokenStorage.swift in Sources */,
+				CEBD8B562A321692004D89FD /* ImagesListPresenter.swift in Sources */,
 				CE7F4F4229F033B900E60085 /* AuthConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

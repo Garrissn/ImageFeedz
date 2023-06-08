@@ -8,7 +8,13 @@
 import Foundation
 import UIKit
 
-final class ImagesListService {
+protocol ImagesListServiceProtocol: AnyObject {
+    func fetchPhotosNextPage ()
+    func changeLike(photoId: String, isLike: Bool, _ completion: @escaping (Result<PhotoLikeResult, Error>) -> Void)
+    var photos: [Photo] { get  }
+}
+
+final class ImagesListService: ImagesListServiceProtocol {
     
     static let shared = ImagesListService()
     static let DidChangeNotification = Notification.Name(rawValue: "ImagesListServiceDidChange")
