@@ -38,22 +38,7 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
     // MARK: - Private Properties
     private var imageListPhotoServiceObserver: NSObjectProtocol?
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
-   // private var imagesListService = ImagesListService.shared
-    //private var photos: [Photo] = []
-//    private lazy var isoDateFormatter: ISO8601DateFormatter = {
-//        let formatter = ISO8601DateFormatter()
-//        formatter.formatOptions = [.withFullDate, .withDashSeparatorInDate]
-//        return formatter
-//    }()
-//    private lazy var dateFormatter: DateFormatter = {
-//        let formatter = DateFormatter()
-//        formatter.dateStyle = .long
-//        formatter.timeStyle = .none
-//        formatter.locale = Locale(identifier: "ru_RU")
-//        formatter.dateFormat = "d MMMM yyyy"
-//        return formatter
-//    }()
-    
+  
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
