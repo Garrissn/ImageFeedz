@@ -16,16 +16,7 @@ protocol ImagesListViewControllerProtocol: AnyObject {
 }
 
 final class ImagesListViewController: UIViewController, ImagesListViewControllerProtocol {
-    func blockingProgressHudHide() {
-        UIBlockingProgressHUD.dismiss()
-    }
-    
-    func blockingProgressHudShow() {
-        UIBlockingProgressHUD.show()
-    }
-    
-    var presenter: ImagesListPresenterProtocol?
-    
+   
     
     
     
@@ -38,7 +29,7 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
     // MARK: - Private Properties
     private var imageListPhotoServiceObserver: NSObjectProtocol?
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
-  
+    var presenter: ImagesListPresenterProtocol?
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
@@ -66,6 +57,15 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
         }
     }
     
+    func blockingProgressHudHide() {
+        UIBlockingProgressHUD.dismiss()
+    }
+    
+    func blockingProgressHudShow() {
+        UIBlockingProgressHUD.show()
+    }
+    
+    
     
     private func setupImageListServiceObserver () {
         imageListPhotoServiceObserver = NotificationCenter.default.addObserver(
@@ -83,12 +83,7 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
        func updateTableViewAnimated() {
         guard   let oldCount = presenter?.updateTableViewAnimated().oldCount,
                 let newCount = presenter?.updateTableViewAnimated().newCount else { return }
-//           let oldCount = photos.count
-//           print(" счетчик начальный \(oldCount)")
-//           let newCount = imagesListService.photos.count
-//           print(" счетчик новый после присвоения  \(newCount)")
-//           photos = imagesListService.photos
-//           print(" счетчик новый после присвоения2  \(photos.count)")
+
            if oldCount != newCount {
                tableView.performBatchUpdates {
                    let indexPaths = (oldCount..<newCount).map { i in
@@ -141,10 +136,7 @@ extension ImagesListViewController: UITableViewDelegate {
     func tableView( _ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath ) {
      
         presenter?.willDisplay(indexPath: indexPath)
-//
-//        if indexPath.row + 1 == imagesListService.photos.count {
-//            imagesListService.fetchPhotosNextPage()
-//            print(" вызвали фэчфото1")
+
             
         
         
@@ -159,9 +151,7 @@ extension ImagesListViewController {
         let url = presenter?.configureCell(indexPath: indexPath).url
         let formattedDate = presenter?.configureCell(indexPath: indexPath).formattedData
         
-//        let image = photos[indexPath.row]
-//        guard let thumbUrlString = image.thumbImageURL,
-//              let url = URL(string: thumbUrlString) else { return }
+
         
         let cache = ImageCache.default
         cache.diskStorage.config.expiration = .seconds(600)
@@ -172,17 +162,13 @@ extension ImagesListViewController {
             self?.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         
-//        if let createdAt = image.createdAt,
-//           let date = isoDateFormatter.date(from: createdAt) {
-//
-//                let formattedDate = dateFormatter.string(from: date)
+
                 cell.labelData.text = formattedDate
             
-           // } else { cell.labelData.text = " Error date"}
+           
         
         cell.setIsLiked(islike: presenter?.photos[indexPath.row].isLiked ?? false)
-        //let likedImage =  UIImage(named: "likeOff")
-        //cell.likeButton.setImage(likedImage, for: .normal)
+       
     }
 }
 
@@ -194,26 +180,10 @@ extension ImagesListViewController: ImagesListCellDelegate {
             DispatchQueue.main.async {
                 cell.setIsLiked(islike: isLiked)
             }
-        })
-        
-//        let photo = photos[indexPath.row] // по номеру ячейуи нашли номер фото в массиве и передали в вызов сервиса по смене лайка
-//        UIBlockingProgressHUD.show()
-//        imagesListService.changeLike(photoId: photo.id, isLike: photo.isLiked) { result in
-//
-//            switch result {
-//            case .success(let photoResult):
-//
-//                self.photos = self.imagesListService.photos
-//                cell.setIsLiked(islike: self.photos[indexPath.row].isLiked)
-//
-//            case .failure:
-//                print(" alertcontr")
-//            }
-//            UIBlockingProgressHUD.dismiss()
-//
-//        }
-    }
+        }
+        )
     
+    }
     
 }
 protocol ImagesListCellDelegate: AnyObject {
