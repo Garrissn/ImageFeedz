@@ -33,6 +33,9 @@
 		CE77C81B29FA8EC20065380F /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE77C81A29FA8EC20065380F /* SplashViewController.swift */; };
 		CE7868F12A2B6F3B00291D88 /* AuthHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7868F02A2B6F3B00291D88 /* AuthHelper.swift */; };
 		CE786E672A3344D6005B67BF /* ImagesListHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE786E662A3344D6005B67BF /* ImagesListHelper.swift */; };
+		CE786E692A33807F005B67BF /* ProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE786E682A33807F005B67BF /* ProfileTests.swift */; };
+		CE786E6B2A33BD32005B67BF /* ProfilePresenterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE786E6A2A33BD32005B67BF /* ProfilePresenterSpy.swift */; };
+		CE786E6D2A33BDE5005B67BF /* ProfileViewControllerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE786E6C2A33BDE5005B67BF /* ProfileViewControllerSpy.swift */; };
 		CE7CB0682A1806D20049AA0E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = CE7CB0672A1806D20049AA0E /* Kingfisher */; };
 		CE7F37A42A0A37050081F297 /* UIBlockingProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F37A32A0A37050081F297 /* UIBlockingProgressHUD.swift */; };
 		CE7F4F4229F033B900E60085 /* AuthConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7F4F4129F033B900E60085 /* AuthConfiguration.swift */; };
@@ -100,6 +103,9 @@
 		CE77C81A29FA8EC20065380F /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		CE7868F02A2B6F3B00291D88 /* AuthHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHelper.swift; sourceTree = "<group>"; };
 		CE786E662A3344D6005B67BF /* ImagesListHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListHelper.swift; sourceTree = "<group>"; };
+		CE786E682A33807F005B67BF /* ProfileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTests.swift; sourceTree = "<group>"; };
+		CE786E6A2A33BD32005B67BF /* ProfilePresenterSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenterSpy.swift; sourceTree = "<group>"; };
+		CE786E6C2A33BDE5005B67BF /* ProfileViewControllerSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewControllerSpy.swift; sourceTree = "<group>"; };
 		CE7F37A32A0A37050081F297 /* UIBlockingProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgressHUD.swift; sourceTree = "<group>"; };
 		CE7F4F4129F033B900E60085 /* AuthConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthConfiguration.swift; sourceTree = "<group>"; };
 		CE9088B62A2CB253008FF8AF /* ProfileViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewPresenter.swift; sourceTree = "<group>"; };
@@ -224,6 +230,9 @@
 			isa = PBXGroup;
 			children = (
 				CE6AB47829CD72C100338D9F /* WebViewTests.swift */,
+				CE786E682A33807F005B67BF /* ProfileTests.swift */,
+				CE786E6A2A33BD32005B67BF /* ProfilePresenterSpy.swift */,
+				CE786E6C2A33BDE5005B67BF /* ProfileViewControllerSpy.swift */,
 			);
 			path = ImageFeedzTests;
 			sourceTree = "<group>";
@@ -522,6 +531,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE6AB47929CD72C100338D9F /* WebViewTests.swift in Sources */,
+				CE786E692A33807F005B67BF /* ProfileTests.swift in Sources */,
+				CE786E6B2A33BD32005B67BF /* ProfilePresenterSpy.swift in Sources */,
+				CE786E6D2A33BDE5005B67BF /* ProfileViewControllerSpy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

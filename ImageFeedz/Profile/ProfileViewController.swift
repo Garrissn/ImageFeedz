@@ -75,7 +75,7 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         addViews()
         layoutViews()
         presenter?.viewDidLoad()
-        presenter?.setupPrifileImageObserver ()
+        presenter?.setupPrifileImageObserver()
        
     }
     

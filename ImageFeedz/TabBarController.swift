@@ -29,7 +29,7 @@ final class TabBarController: UITabBarController {
     let tokenStorage = OAuth2TokenStorage()
         let profileViewPresenter = ProfileViewPresenter(view: profileViewController, profileService: profileService, profileImageService: profileImageService, tokenStorage: tokenStorage)
         profileViewController.presenter = profileViewPresenter
-        profileViewPresenter.view = profileViewController
+       // profileViewPresenter.view = profileViewController
         
         profileViewController.tabBarItem = UITabBarItem(title: nil,
                                                         image: UIImage(named: "tab_profile_active"),
