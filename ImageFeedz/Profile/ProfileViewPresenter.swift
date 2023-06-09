@@ -11,19 +11,37 @@ import UIKit
  protocol ProfileViewPresenterProtocol: AnyObject {
     var view: ProfileViewControllerProtocol? { get set }
     func viewDidLoad()
-     func logoutButtonTapped(presentingViewController: UIViewController)
+    func logoutButtonTapped(presentingViewController: UIViewController)
+    func setupPrifileImageObserver()
 }
 
 final class ProfileViewPresenter: ProfileViewPresenterProtocol {
     
     
-    var view: ProfileViewControllerProtocol?
-    private let profileService = ProfileService.shared
-    private let tokenStorage = OAuth2TokenStorage()
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
+  weak  var view: ProfileViewControllerProtocol?
+    
+    private let profileService: ProfileServiceProtocol
+    private let profileImageService : ProfileImageServiceProtocol
+    private let tokenStorage: OAuth2TokenStorageProtocol
+    
+    init(view: ProfileViewControllerProtocol? ,
+         profileService: ProfileServiceProtocol,
+         profileImageService: ProfileImageServiceProtocol,
+         tokenStorage: OAuth2TokenStorageProtocol) {
+        self.view = view
+        self.profileService = profileService
+        self.profileImageService = profileImageService
+        self.tokenStorage = tokenStorage
+    }
+    
+   
+    
     
     func viewDidLoad() {
         
-        guard let profileImageURL = ProfileImageService.shared.avatarURL,
+        guard let profileImageURL = profileImageService.avatarURL,
               let imageURL = URL(string: profileImageURL) else { return }
         
         view?.updateAvatar(with: imageURL)
@@ -33,7 +51,16 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
         view?.updateProfileDetails(profile: profile)
     }
     
-    
+    func setupPrifileImageObserver() {
+        profileImageServiceObserver = NotificationCenter.default.addObserver(
+            forName: ProfileImageService.DidChangeNotification,
+            object: nil,
+            queue: .main)  { [weak self] _ in
+                guard let self = self else { return }
+                self.viewDidLoad()
+            }
+        
+    }
     
     
     func logoutButtonTapped(presentingViewController: UIViewController) {

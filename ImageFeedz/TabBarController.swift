@@ -23,7 +23,11 @@ final class TabBarController: UITabBarController {
         
         
         let profileViewController = ProfileViewController()
-        let profileViewPresenter = ProfileViewPresenter()
+        
+        let profileService = ProfileService.shared
+        let profileImageService = ProfileImageService.shared
+    let tokenStorage = OAuth2TokenStorage()
+        let profileViewPresenter = ProfileViewPresenter(view: profileViewController, profileService: profileService, profileImageService: profileImageService, tokenStorage: tokenStorage)
         profileViewController.presenter = profileViewPresenter
         profileViewPresenter.view = profileViewController
         

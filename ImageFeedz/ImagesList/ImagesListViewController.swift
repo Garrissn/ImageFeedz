@@ -25,7 +25,7 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
     // MARK: - Private Properties
     
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
-    weak var presenter: ImagesListPresenterProtocol?
+   var presenter: ImagesListPresenterProtocol?
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {

@@ -6,8 +6,10 @@
 //
 
 import Foundation
-
-final class ProfileImageService {
+protocol ProfileImageServiceProtocol {
+    var avatarURL: String? { get }
+}
+final class ProfileImageService: ProfileImageServiceProtocol {
     // MARK: - Constants
     
     static let DidChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")

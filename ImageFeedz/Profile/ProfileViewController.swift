@@ -15,30 +15,14 @@ import WebKit
     
     func updateAvatar(with imageURL: URL)
     func updateProfileDetails(profile: Profile?)
-    //func present(view: UIViewController)
+    
 }
 
 final class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
-    var presenter: ProfileViewPresenterProtocol?
-    
-    
-    
-    
-    
-    
-    
-    
+     var presenter: ProfileViewPresenterProtocol?
     
     // MARK: - Private Properties
-    
-    
-    
-    
-    
-    
-    private let profileService = ProfileService.shared
-    private let tokenStorage = OAuth2TokenStorage()
-    private var profileImageServiceObserver: NSObjectProtocol?
+  
     private let avatarImage: UIImageView = {
         let image = UIImage(named: "avatar")
         let avatarImage = UIImageView(image: image)
@@ -91,24 +75,12 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         addViews()
         layoutViews()
         presenter?.viewDidLoad()
-        
-        setupPrifileImageObserver ()
+        presenter?.setupPrifileImageObserver ()
        
     }
     
     
     // MARK: - Private Methods
-    
-    private func setupPrifileImageObserver () {
-        profileImageServiceObserver = NotificationCenter.default.addObserver(
-            forName: ProfileImageService.DidChangeNotification,
-            object: nil,
-            queue: .main)  { [weak self] _ in
-                guard let self = self else { return }
-                self.presenter?.viewDidLoad()
-            }
-    }
-    
     
      func updateAvatar (with imageURL: URL) {
         
