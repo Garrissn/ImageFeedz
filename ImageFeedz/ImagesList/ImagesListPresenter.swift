@@ -52,6 +52,13 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
         imagesListService.fetchPhotosNextPage()
     }
     
+    func viewDidLoad() {
+        
+        setupImageListServiceObserver()
+        
+    }
+    
+    
     func setupImageListServiceObserver() {
         imageListPhotoServiceObserver = NotificationCenter.default.addObserver(
             forName: ImagesListService.DidChangeNotification,
@@ -79,9 +86,7 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
     }
     
     
-    func viewDidLoad() {
-        
-    }
+    
     
     func willDisplay(indexPath: IndexPath) {
         if indexPath.row + 1 == imagesListService.photos.count {
@@ -100,6 +105,8 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
         
         
         let formattedDate = dateFormatter.string(from: date)
+     //   let configuredCell = ConfiguredCell(url: url, formattedData: formattedDate)
+        
         return (url, formattedDate)
     }
     
@@ -126,3 +133,4 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
     }
     
 }
+

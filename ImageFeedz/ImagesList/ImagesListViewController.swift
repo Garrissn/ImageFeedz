@@ -9,14 +9,20 @@
 import UIKit
 import Kingfisher
 
+
 protocol ImagesListViewControllerProtocol: AnyObject {
     var presenter: ImagesListPresenterProtocol? { get set }
     func blockingProgressHudShow()
     func blockingProgressHudHide()
     func loadTableView(oldCount: Int, newCount: Int)
+    
 }
 
 final class ImagesListViewController: UIViewController, ImagesListViewControllerProtocol {
+    
+    
+    
+    
     
     
     // MARK: - Outlets
@@ -31,8 +37,8 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
-        
-        presenter?.setupImageListServiceObserver()
+        presenter?.viewDidLoad()
+        //presenter?.setupImageListServiceObserver()
         //  setupImageListServiceObserver ()
         // updateTableViewAnimated()
         
@@ -123,6 +129,7 @@ extension ImagesListViewController {
     
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         cell.delegate = self
+       // presenter?.configureCell(indexPath: indexPath)
         
         let url = presenter?.configureCell(indexPath: indexPath).url
         let formattedDate = presenter?.configureCell(indexPath: indexPath).formattedData
