@@ -13,6 +13,11 @@
 		CE57107A2A1F694D00204192 /* ImagesListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5710792A1F694C00204192 /* ImagesListService.swift */; };
 		CE5710822A1FE4B100204192 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5710812A1FE4B100204192 /* Tests.swift */; };
 		CE68268C29DC4AEF00A969D2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE68268B29DC4AEF00A969D2 /* ProfileViewController.swift */; };
+		CE69ADCF2A34A1B600B17296 /* ProfileMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69ADCE2A34A1B600B17296 /* ProfileMock.swift */; };
+		CE69ADD32A34C15000B17296 /* WebViewPresenterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69ADD22A34C15000B17296 /* WebViewPresenterSpy.swift */; };
+		CE69ADD52A34C18C00B17296 /* WebViewControlllerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69ADD42A34C18C00B17296 /* WebViewControlllerSpy.swift */; };
+		CE69ADD82A34C3F400B17296 /* ImagesListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69ADD72A34C3F400B17296 /* ImagesListTests.swift */; };
+		CE69ADDA2A34C5F700B17296 /* ImagesListPresenterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69ADD92A34C5F700B17296 /* ImagesListPresenterSpy.swift */; };
 		CE6AB46229CD72C000338D9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6AB46129CD72C000338D9F /* AppDelegate.swift */; };
 		CE6AB46429CD72C000338D9F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6AB46329CD72C000338D9F /* SceneDelegate.swift */; };
 		CE6AB46929CD72C000338D9F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE6AB46729CD72C000338D9F /* Main.storyboard */; };
@@ -81,6 +86,11 @@
 		CE57107F2A1FE4B100204192 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE5710812A1FE4B100204192 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		CE68268B29DC4AEF00A969D2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		CE69ADCE2A34A1B600B17296 /* ProfileMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMock.swift; sourceTree = "<group>"; };
+		CE69ADD22A34C15000B17296 /* WebViewPresenterSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenterSpy.swift; sourceTree = "<group>"; };
+		CE69ADD42A34C18C00B17296 /* WebViewControlllerSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewControlllerSpy.swift; sourceTree = "<group>"; };
+		CE69ADD72A34C3F400B17296 /* ImagesListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListTests.swift; sourceTree = "<group>"; };
+		CE69ADD92A34C5F700B17296 /* ImagesListPresenterSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListPresenterSpy.swift; sourceTree = "<group>"; };
 		CE6AB45E29CD72C000338D9F /* ImageFeedz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeedz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE6AB46129CD72C000338D9F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE6AB46329CD72C000338D9F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -179,6 +189,36 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		CE69ADD02A34C0E200B17296 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				CE786E682A33807F005B67BF /* ProfileTests.swift */,
+				CE786E6A2A33BD32005B67BF /* ProfilePresenterSpy.swift */,
+				CE786E6C2A33BDE5005B67BF /* ProfileViewControllerSpy.swift */,
+				CE69ADCE2A34A1B600B17296 /* ProfileMock.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		CE69ADD12A34C10900B17296 /* WebView */ = {
+			isa = PBXGroup;
+			children = (
+				CE6AB47829CD72C100338D9F /* WebViewTests.swift */,
+				CE69ADD22A34C15000B17296 /* WebViewPresenterSpy.swift */,
+				CE69ADD42A34C18C00B17296 /* WebViewControlllerSpy.swift */,
+			);
+			path = WebView;
+			sourceTree = "<group>";
+		};
+		CE69ADD62A34C3B400B17296 /* ImagesList */ = {
+			isa = PBXGroup;
+			children = (
+				CE69ADD72A34C3F400B17296 /* ImagesListTests.swift */,
+				CE69ADD92A34C5F700B17296 /* ImagesListPresenterSpy.swift */,
+			);
+			path = ImagesList;
+			sourceTree = "<group>";
+		};
 		CE6AB45529CD72C000338D9F = {
 			isa = PBXGroup;
 			children = (
@@ -229,10 +269,9 @@
 		CE6AB47729CD72C100338D9F /* ImageFeedzTests */ = {
 			isa = PBXGroup;
 			children = (
-				CE6AB47829CD72C100338D9F /* WebViewTests.swift */,
-				CE786E682A33807F005B67BF /* ProfileTests.swift */,
-				CE786E6A2A33BD32005B67BF /* ProfilePresenterSpy.swift */,
-				CE786E6C2A33BDE5005B67BF /* ProfileViewControllerSpy.swift */,
+				CE69ADD62A34C3B400B17296 /* ImagesList */,
+				CE69ADD12A34C10900B17296 /* WebView */,
+				CE69ADD02A34C0E200B17296 /* Profile */,
 			);
 			path = ImageFeedzTests;
 			sourceTree = "<group>";
@@ -533,7 +572,12 @@
 				CE6AB47929CD72C100338D9F /* WebViewTests.swift in Sources */,
 				CE786E692A33807F005B67BF /* ProfileTests.swift in Sources */,
 				CE786E6B2A33BD32005B67BF /* ProfilePresenterSpy.swift in Sources */,
+				CE69ADCF2A34A1B600B17296 /* ProfileMock.swift in Sources */,
 				CE786E6D2A33BDE5005B67BF /* ProfileViewControllerSpy.swift in Sources */,
+				CE69ADDA2A34C5F700B17296 /* ImagesListPresenterSpy.swift in Sources */,
+				CE69ADD82A34C3F400B17296 /* ImagesListTests.swift in Sources */,
+				CE69ADD52A34C18C00B17296 /* WebViewControlllerSpy.swift in Sources */,
+				CE69ADD32A34C15000B17296 /* WebViewPresenterSpy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

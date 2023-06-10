@@ -29,32 +29,33 @@ final class ProfileTests: XCTestCase {
     
     func testPresenterCallsUpdateAvatar() {
         //given
-        let profileViewController = ProfileViewControllerSpy()
+        let viewController = ProfileViewControllerSpy()
         let profileService = ProfileService.shared
         let profileImageService = ProfileImageService.shared
         let tokenStorage = OAuth2TokenStorage()
 
-        let presenter = ProfileViewPresenter(view: profileViewController, profileService: profileService, profileImageService: profileImageService, tokenStorage: tokenStorage)
-        profileViewController.presenter = presenter
+        let presenter = ProfileViewPresenter(view: viewController, profileService: profileService, profileImageService: profileImageService, tokenStorage: tokenStorage)
+        viewController.presenter = presenter
+        presenter.view = viewController
 
         //when
         presenter.viewDidLoad()
         
         //then
-        XCTAssertTrue(profileViewController.updateAvatar)
+        XCTAssertTrue(viewController.updateAvatarImage)
     }
     
     
     func testPresenterCallsUpdateProfileDetails() {
         //given
-        let profileViewController = ProfileViewControllerSpy()
+        let viewController = ProfileViewControllerSpy()
        
         let profileService = ProfileService.shared
         let profileImageService = ProfileImageService.shared
         let tokenStorage = OAuth2TokenStorage()
 
-        let presenter = ProfileViewPresenter(view: profileViewController, profileService: profileService, profileImageService: profileImageService, tokenStorage: tokenStorage)
-        profileViewController.presenter = presenter
+        let presenter = ProfileViewPresenter(view: viewController, profileService: profileService, profileImageService: profileImageService, tokenStorage: tokenStorage)
+        viewController.presenter = presenter
        
         
         //when
@@ -62,13 +63,13 @@ final class ProfileTests: XCTestCase {
         
         
         //then
-        XCTAssertTrue(profileViewController.updateProfile)
+        XCTAssertTrue(viewController.updateProfile)
     }
     
     func testProfilePresenterCallsLogoutButtonTapped() {
         //given
         
-        let presentingViewController = UIViewController()
+        let presentingViewController = ProfileViewController()
         let presenter = ProfilePresenterSpy()
        
         
@@ -99,4 +100,9 @@ final class ProfileTests: XCTestCase {
         // Then
         XCTAssertNotNil(presenter.setupPrifileImageObserver)
     }
+    
+    
+    
+    
+    
 }

@@ -10,15 +10,18 @@ import Foundation
 
 final class ProfileViewControllerSpy: ProfileViewControllerProtocol {
     var presenter: ImageFeedz.ProfileViewPresenterProtocol?
-    var updateAvatar: Bool = false
+    
+    
+    
+    var updateAvatarImage: Bool = false
     var updateProfile: Bool = false
     
     func updateAvatar(with imageURL: URL) {
-        updateAvatar = true
+        updateAvatarImage = true
         
     }
     
-    func updateProfileDetails(profile: ImageFeedz.Profile?) {
+    func updateProfileDetails(profile: Profile?) {
         updateProfile = true
         
     }
