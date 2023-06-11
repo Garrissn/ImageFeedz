@@ -101,8 +101,4 @@ final class ProfileTests: XCTestCase {
         XCTAssertNotNil(presenter.setupPrifileImageObserver)
     }
     
-    
-    
-    
-    
 }

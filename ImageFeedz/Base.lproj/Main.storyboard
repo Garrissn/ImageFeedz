@@ -225,6 +225,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nqZ-fG-KoT">
                                 <rect key="frame" x="16" y="646" width="361" height="48"/>
                                 <color key="backgroundColor" name="YPWhite"/>
+                                <accessibility key="accessibilityConfiguration" identifier="Authenticate"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="bvp-zX-Iem"/>
                                 </constraints>
@@ -246,6 +247,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="yNw-c8-npP"/>
                         <color key="backgroundColor" name="YPBlack"/>
+                        <accessibility key="accessibilityConfiguration" identifier="Authenticate"/>
                         <constraints>
                             <constraint firstItem="nqZ-fG-KoT" firstAttribute="centerX" secondItem="Xy7-V9-oC1" secondAttribute="centerX" id="6YH-wy-I3G"/>
                             <constraint firstItem="nqZ-fG-KoT" firstAttribute="leading" secondItem="yNw-c8-npP" secondAttribute="leading" constant="16" id="GrG-TN-7Ah"/>
@@ -314,6 +316,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="GO7-KB-t16"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <accessibility key="accessibilityConfiguration" identifier="UnsplashWebView"/>
                         <constraints>
                             <constraint firstItem="o8K-gU-tgp" firstAttribute="top" secondItem="GIb-ZY-9HF" secondAttribute="top" id="3HQ-5o-Adx"/>
                             <constraint firstAttribute="bottom" secondItem="o8K-gU-tgp" secondAttribute="bottom" id="Bx1-g0-vE7"/>

@@ -36,17 +36,13 @@ final class ImagesListTest: XCTestCase {
         let viewController = ImagesListViewControllerSpy()
         let imagesListService = ImagesListService.shared
         
-        
         let presenter = ImagesListPresenter(imagesListService: imagesListService, view: viewController)
         
         viewController.presenter = presenter
         presenter.view = viewController
         
-        
         //when
         presenter.updateTableViewAnimated()
-        
-        
         
         //then
         XCTAssertTrue(viewController.loadTable)
