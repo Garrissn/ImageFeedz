@@ -19,7 +19,7 @@
 		CE69ADD82A34C3F400B17296 /* ImagesListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69ADD72A34C3F400B17296 /* ImagesListTests.swift */; };
 		CE69ADDA2A34C5F700B17296 /* ImagesListPresenterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69ADD92A34C5F700B17296 /* ImagesListPresenterSpy.swift */; };
 		CE69ADDC2A34CDF100B17296 /* ImagesListViewControllerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69ADDB2A34CDF100B17296 /* ImagesListViewControllerSpy.swift */; };
-		CE69ADDE2A35095A00B17296 /* ImageListMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69ADDD2A35095A00B17296 /* ImageListMock.swift */; };
+		CE69ADDE2A35095A00B17296 /* ImageListServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69ADDD2A35095A00B17296 /* ImageListServiceMock.swift */; };
 		CE6AB46229CD72C000338D9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6AB46129CD72C000338D9F /* AppDelegate.swift */; };
 		CE6AB46429CD72C000338D9F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6AB46329CD72C000338D9F /* SceneDelegate.swift */; };
 		CE6AB46929CD72C000338D9F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CE6AB46729CD72C000338D9F /* Main.storyboard */; };
@@ -94,7 +94,7 @@
 		CE69ADD72A34C3F400B17296 /* ImagesListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListTests.swift; sourceTree = "<group>"; };
 		CE69ADD92A34C5F700B17296 /* ImagesListPresenterSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListPresenterSpy.swift; sourceTree = "<group>"; };
 		CE69ADDB2A34CDF100B17296 /* ImagesListViewControllerSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListViewControllerSpy.swift; sourceTree = "<group>"; };
-		CE69ADDD2A35095A00B17296 /* ImageListMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListMock.swift; sourceTree = "<group>"; };
+		CE69ADDD2A35095A00B17296 /* ImageListServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListServiceMock.swift; sourceTree = "<group>"; };
 		CE6AB45E29CD72C000338D9F /* ImageFeedz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeedz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE6AB46129CD72C000338D9F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CE6AB46329CD72C000338D9F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -220,7 +220,7 @@
 				CE69ADD72A34C3F400B17296 /* ImagesListTests.swift */,
 				CE69ADD92A34C5F700B17296 /* ImagesListPresenterSpy.swift */,
 				CE69ADDB2A34CDF100B17296 /* ImagesListViewControllerSpy.swift */,
-				CE69ADDD2A35095A00B17296 /* ImageListMock.swift */,
+				CE69ADDD2A35095A00B17296 /* ImageListServiceMock.swift */,
 			);
 			path = ImagesList;
 			sourceTree = "<group>";
@@ -578,7 +578,7 @@
 				CE6AB47929CD72C100338D9F /* WebViewTests.swift in Sources */,
 				CE69ADDC2A34CDF100B17296 /* ImagesListViewControllerSpy.swift in Sources */,
 				CE786E692A33807F005B67BF /* ProfileTests.swift in Sources */,
-				CE69ADDE2A35095A00B17296 /* ImageListMock.swift in Sources */,
+				CE69ADDE2A35095A00B17296 /* ImageListServiceMock.swift in Sources */,
 				CE786E6B2A33BD32005B67BF /* ProfilePresenterSpy.swift in Sources */,
 				CE69ADCF2A34A1B600B17296 /* ProfileMock.swift in Sources */,
 				CE786E6D2A33BDE5005B67BF /* ProfileViewControllerSpy.swift in Sources */,
