@@ -16,8 +16,10 @@ final class  ImagesListPresenterSpy: ImagesListPresenterProtocol {
     let formattedData = " Data"
     var setupImageList = false
     
+   var viewDidLoadCalled = false
+    
     func viewDidLoad() {
-        
+        viewDidLoadCalled = true
     }
     
     func fetchPhotosNextPage() {

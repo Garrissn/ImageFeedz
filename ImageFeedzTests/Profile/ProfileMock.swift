@@ -27,12 +27,20 @@ class MockWebViewController {
            cleanCalled = true
        }
    }
-//class MockPresentingViewController: UIViewController {
-//    var presentedViewController: UIAlertController?
-//
-//            override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
-//                presentedViewController = viewControllerToPresent as? UIAlertController
-//                completion?()
-//            }
+class ProfileImageServiceMock: ProfileImageServiceProtocol {
+    var avatarURL: String? = "https://example.com/avatar.jpg"
+    
+    
+}
+class ProfileServiceMock: ProfileServiceProtocol {
+    
+    
+   
+    
+    var profile: Profile? = Profile(username: "String?",
+                          name: "String?",
+                          loginName: "String?",
+                          bio: "String?")
+    
+}
 
-    //}

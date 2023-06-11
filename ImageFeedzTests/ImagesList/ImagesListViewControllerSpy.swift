@@ -15,6 +15,7 @@ final class ImagesListViewControllerSpy: ImagesListViewControllerProtocol {
     var loadTable = false
     var blockShow = false
     var blockHide = false
+    var loadTableViewCallsCount = 0
     
     func blockingProgressHudShow() {
         blockShow = true
@@ -26,7 +27,7 @@ final class ImagesListViewControllerSpy: ImagesListViewControllerProtocol {
     
     func loadTableView(oldCount: Int, newCount: Int) {
         loadTable = true
-        
+        loadTableViewCallsCount += 1
     }
     
     

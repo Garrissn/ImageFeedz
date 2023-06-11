@@ -30,8 +30,8 @@ final class ProfileTests: XCTestCase {
     func testPresenterCallsUpdateAvatar() {
         //given
         let viewController = ProfileViewControllerSpy()
-        let profileService = ProfileService.shared
-        let profileImageService = ProfileImageService.shared
+        let profileService = ProfileServiceMock()
+        let profileImageService = ProfileImageServiceMock()
         let tokenStorage = OAuth2TokenStorage()
 
         let presenter = ProfileViewPresenter(view: viewController, profileService: profileService, profileImageService: profileImageService, tokenStorage: tokenStorage)
@@ -50,8 +50,8 @@ final class ProfileTests: XCTestCase {
         //given
         let viewController = ProfileViewControllerSpy()
        
-        let profileService = ProfileService.shared
-        let profileImageService = ProfileImageService.shared
+        let profileService = ProfileServiceMock()
+        let profileImageService = ProfileImageServiceMock()
         let tokenStorage = OAuth2TokenStorage()
 
         let presenter = ProfileViewPresenter(view: viewController, profileService: profileService, profileImageService: profileImageService, tokenStorage: tokenStorage)

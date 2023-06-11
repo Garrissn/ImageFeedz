@@ -48,9 +48,7 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
     }()
     
     
-    func fetchPhotosNextPage() {
-        imagesListService.fetchPhotosNextPage()
-    }
+    
     
     func viewDidLoad() {
         
@@ -58,6 +56,9 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
         
     }
     
+    func fetchPhotosNextPage() {
+        imagesListService.fetchPhotosNextPage()
+    }
     
     func setupImageListServiceObserver() {
         imageListPhotoServiceObserver = NotificationCenter.default.addObserver(
@@ -105,7 +106,7 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
         
         
         let formattedDate = dateFormatter.string(from: date)
-     //   let configuredCell = ConfiguredCell(url: url, formattedData: formattedDate)
+     
         
         return (url, formattedDate)
     }

@@ -11,7 +11,7 @@ import XCTest
 
 final class ImagesListTest: XCTestCase {
     
-    func testViewControllerCallssetupImageListServiceObserver() {
+    func testViewControllerCallsViewDidLoad() {
         // given
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = storyBoard.instantiateViewController(withIdentifier: "ImagesListViewController") as! ImagesListViewController
@@ -23,13 +23,16 @@ final class ImagesListTest: XCTestCase {
 
         
         //when
+       
         _ = viewController.view
-       // presenter.setupImageListServiceObserver()
+       
         
         
         //then
-        XCTAssertTrue(presenter.setupImageList)
+        XCTAssertTrue(presenter.viewDidLoadCalled)
     }
+    
+    
     
     func testPresenterCallsLoadTableView() {
         // given
@@ -53,49 +56,79 @@ final class ImagesListTest: XCTestCase {
         XCTAssertTrue(viewController.loadTable)
     }
     
-    func testViewContrillerCallsBlockingProgress() {
-        // given
+   
+    
+    
+
+   
+
+   
+        
+    func testWillDisplayShouldFetchNextPageWhenReachedEndOfPhotos() {
+        // Given
         
         let viewController = ImagesListViewControllerSpy()
-        let imagesListService = ImagesListService.shared
+        let imagesListService = ImagesListServiceMock()
        
         let presenter = ImagesListPresenter(imagesListService: imagesListService, view: viewController)
        
         
        viewController.presenter = presenter
        presenter.view = viewController
-
-        
-        //when
-        presenter.imageListCellDidTapLike(indexPath: <#T##IndexPath#>, completion: <#T##(Bool) -> Void#>)
         
         
+        let indexPath = IndexPath(row: imagesListService.photos.count - 1, section: 0)
         
-        //then
-        XCTAssertTrue(viewController.blockHide)
+        // When
+        presenter.willDisplay(indexPath: indexPath)
+        
+        // Then
+        XCTAssertTrue(imagesListService.fetchPhotosNextPageCalled, "Вызов следующих Фото")
+        XCTAssertEqual(viewController.loadTableViewCallsCount, 0, "не должен грузить лоадтейблвью")
     }
-    
-    func testViewControllerCallsConfigureCell() {
-        // given
+
+    func testWillDisplayShouldNotFetchNextPageWhenNotReachedEndOfPhotos() {
+        // Given
         
         let viewController = ImagesListViewControllerSpy()
-        let imagesListService = ImagesListMock()
+        let imagesListService = ImagesListServiceMock()
        
         let presenter = ImagesListPresenter(imagesListService: imagesListService, view: viewController)
        
         
        viewController.presenter = presenter
        presenter.view = viewController
-
         
-        //when
-        presenter.configureCell(indexPath: <#T##IndexPath#>)
+        let indexPath = IndexPath(row: 0, section: 0)
         
+        // When
+        presenter.willDisplay(indexPath: indexPath)
         
-        
-        //then
-        XCTAssertTrue(viewController.)
+        // Then
+        XCTAssertFalse(imagesListService.fetchPhotosNextPageCalled, "не должен вызывать фечнекстфото")
+        XCTAssertEqual(viewController.loadTableViewCallsCount, 0, "вью не должен вызывать loadTableView")
     }
     
+    func testWillDisplayShouldNotFetchNextPageWhenNoPhotos() {
+        // Given
+        let viewController = ImagesListViewControllerSpy()
+        let imagesListService = ImagesListServiceMock()
+       
+        let presenter = ImagesListPresenter(imagesListService: imagesListService, view: viewController)
+       
+        
+       viewController.presenter = presenter
+       presenter.view = viewController
+        
+        let indexPath = IndexPath(row: 0, section: 0)
+        imagesListService.photos = []
+        
+        // When
+        presenter.willDisplay(indexPath: indexPath)
+        
+        // Then
+        XCTAssertFalse(imagesListService.fetchPhotosNextPageCalled, "Should not fetch next page")
+        XCTAssertEqual(viewController.loadTableViewCallsCount, 0, "Should not call loadTableView")
+    }
 
 }
