@@ -142,12 +142,16 @@
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e2K-l3-oHp" userLabel="BackButton">
                                 <rect key="frame" x="16" y="15" width="24" height="24"/>
+                                <accessibility key="accessibilityConfiguration" identifier="NavBackButtonWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="24" id="R0q-Yn-QfI"/>
                                     <constraint firstAttribute="height" constant="24" id="wuy-4u-CLL"/>
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="Backward"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="NavBackButtonWhite"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="didTapBackButton" destination="R7P-dJ-qtn" eventType="touchUpInside" id="1KP-3l-86O"/>
                                 </connections>
@@ -239,6 +243,7 @@
                                         <integer key="value" value="16"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Authenticate"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <segue destination="9hV-h4-Zxy" kind="presentation" identifier="ShowWebView" modalPresentationStyle="overFullScreen" id="psV-7x-84X"/>
@@ -296,6 +301,9 @@
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="UnsplashWebView"/>
+                                </userDefinedRuntimeAttributes>
                             </wkWebView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0qL-Im-fiu" userLabel="nav_back_button">
                                 <rect key="frame" x="9" y="9" width="24" height="24"/>
@@ -328,7 +336,13 @@
                             <constraint firstItem="0qL-Im-fiu" firstAttribute="leading" secondItem="GO7-KB-t16" secondAttribute="leading" constant="9" id="nQs-eY-eP9"/>
                             <constraint firstAttribute="trailing" secondItem="o8K-gU-tgp" secondAttribute="trailing" id="xfo-rJ-PV4"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="UnsplashWebView"/>
+                        </userDefinedRuntimeAttributes>
                     </view>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="UnsplashWebView"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="progressView" destination="ISX-dY-gk9" id="III-r5-pHo"/>
                         <outlet property="webView" destination="o8K-gU-tgp" id="Oiz-d9-Hkq"/>

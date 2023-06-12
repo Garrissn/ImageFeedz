@@ -17,21 +17,14 @@ public protocol WebViewViewControllerProtocol: AnyObject {
 }
 
 final class WebViewViewController: UIViewController, WebViewViewControllerProtocol {
-    func load(request: URLRequest) {
-        webView.load(request)
-    }
     
-    
-    // MARK: - Private Properties
+    // MARK: -  Properties
     
     var presenter: WebViewPresenterProtocol?
-    
-    
-    
-    
     private var estimatedProgressObservation: NSKeyValueObservation?
     weak var delegate: WebViewViewControllerDelegate?
     
+    // MARK: -  Outlets
     @IBOutlet private weak var progressView: UIProgressView!
     @IBOutlet private weak var webView: WKWebView!
     @IBAction private func didTapBackButton(_ sender: Any?) {
@@ -43,7 +36,6 @@ final class WebViewViewController: UIViewController, WebViewViewControllerProtoc
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter?.viewDidLoad()
-        
         webView.navigationDelegate = self
         estimatedProgressObservation = webView.observe(\.estimatedProgress,
                                                         options: [],
@@ -52,8 +44,8 @@ final class WebViewViewController: UIViewController, WebViewViewControllerProtoc
             presenter?.didUpdateProgressValue(webView.estimatedProgress)
         })
     }
-    // MARK: - Private Methods
-   
+    // MARK: - Methods
+    
     private func observe<Root,Value>(
         _ keyPath: KeyPath<Root,Value>,
         options: NSKeyValueObservingOptions = [],
@@ -61,7 +53,11 @@ final class WebViewViewController: UIViewController, WebViewViewControllerProtoc
         
     ) -> NSKeyValueObservation {
         return observe(keyPath, options: options, changeHandler: changeHandler)
-       
+        
+    }
+    
+    func load(request: URLRequest) {
+        webView.load(request)
     }
     
     func setProgressValue(_ newValue: Float) {
@@ -71,13 +67,13 @@ final class WebViewViewController: UIViewController, WebViewViewControllerProtoc
         progressView.isHidden = isHidden
     }
     
-   
+    
 }
 
 extension WebViewViewController: WKNavigationDelegate { // пришел ответ из ансплеш в виде УРЛ, проверяем адрес , делаем выборку ищем код авторизации и передаем его в вебвью
     private func code(from navigationAction: WKNavigationAction) -> String? {
         if let url = navigationAction.request.url {
-           
+            
             return  presenter?.code(from: url)
         }
         return nil
@@ -97,8 +93,6 @@ extension WebViewViewController: WKNavigationDelegate { // пришел отве
     }
     
 }
-
-
 
 extension WebViewViewController {
     static func clean() {

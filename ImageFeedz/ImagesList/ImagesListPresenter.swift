@@ -20,19 +20,17 @@ protocol ImagesListPresenterProtocol: AnyObject {
 
 final class ImagesListPresenter: ImagesListPresenterProtocol {
     
+    // MARK: - Properties
     
     private var imageListPhotoServiceObserver: NSObjectProtocol?
     internal var photos: [Photo] = []
     weak var view: ImagesListViewControllerProtocol?
-    
     private var imagesListService: ImagesListServiceProtocol
     
     init(imagesListService: ImagesListServiceProtocol, view: ImagesListViewControllerProtocol ) {
         self.imagesListService = imagesListService
         self.view = view
     }
-    
-    
     private lazy var isoDateFormatter: ISO8601DateFormatter = {
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withFullDate, .withDashSeparatorInDate]
@@ -48,18 +46,14 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
     }()
     
     
-    
+    // MARK: - Methods
     
     func viewDidLoad() {
-        
         setupImageListServiceObserver()
-        
     }
-    
     func fetchPhotosNextPage() {
         imagesListService.fetchPhotosNextPage()
     }
-    
     func setupImageListServiceObserver() {
         imageListPhotoServiceObserver = NotificationCenter.default.addObserver(
             forName: ImagesListService.DidChangeNotification,
@@ -70,24 +64,17 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
                 self.updateTableViewAnimated()
             }
         imagesListService.fetchPhotosNextPage()
-        
     }
-    
     
     func updateTableViewAnimated()  {
         let oldCount = photos.count
         print(" счетчик начальный \(oldCount)")
         let newCount = imagesListService.photos.count
-        
         photos = imagesListService.photos
         print(" счетчик новый после присвоения  \(newCount)")
-        
         print(" счетчик новый после присвоения2  \(photos.count)")
         view?.loadTableView(oldCount: oldCount, newCount: newCount)
     }
-    
-    
-    
     
     func willDisplay(indexPath: IndexPath) {
         if indexPath.row + 1 == imagesListService.photos.count {
@@ -103,20 +90,16 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
         
         guard  let createdAt = image.createdAt,
                let date = isoDateFormatter.date(from: createdAt) else { fatalError("Invalid date")}
-        
-        
         let formattedDate = dateFormatter.string(from: date)
-     
         
         return (url, formattedDate)
     }
     
-    
     func imageListCellDidTapLike(indexPath: IndexPath, completion: @escaping (Bool) -> Void){
         let photo = photos[indexPath.row] // по номеру ячейуи нашли номер фото в массиве и передали в вызов сервиса по смене лайка
         view?.blockingProgressHudShow()
-        imagesListService.changeLike(photoId: photo.id, isLike: photo.isLiked) { result in
-            
+        imagesListService.changeLike(photoId: photo.id, isLike: photo.isLiked) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let photoResult):
                 
@@ -132,6 +115,5 @@ final class ImagesListPresenter: ImagesListPresenterProtocol {
             
         }
     }
-    
 }
 

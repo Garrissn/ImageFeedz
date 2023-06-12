@@ -17,9 +17,9 @@ public protocol WebViewPresenterProtocol {
     func code(from url: URL) -> String?
 }
 
-
 final class WebViewPresenter: WebViewPresenterProtocol {
     
+    // MARK: -  Properties
     var authHelper: AuthHelperProtocol
     weak var view: WebViewViewControllerProtocol?
     
@@ -28,8 +28,8 @@ final class WebViewPresenter: WebViewPresenterProtocol {
         self.authHelper = authHelper
     }
     
+    // MARK: -  Methods
     func viewDidLoad() {
-        
         let request = authHelper.authRequest()
         view?.load(request: request)
         didUpdateProgressValue(0)

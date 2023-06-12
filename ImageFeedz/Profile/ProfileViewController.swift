@@ -12,7 +12,6 @@ import WebKit
 
  protocol ProfileViewControllerProtocol: AnyObject {
     var presenter: ProfileViewPresenterProtocol? { get set }
-    
     func updateAvatar(with imageURL: URL)
     func updateProfileDetails(profile: Profile?)
     
@@ -27,7 +26,6 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
         let image = UIImage(named: "avatar")
         let avatarImage = UIImageView(image: image)
         avatarImage.translatesAutoresizingMaskIntoConstraints = false
-        
         return avatarImage
     }()
     
@@ -80,7 +78,7 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
     }
     
     
-    // MARK: - Private Methods
+    // MARK: -  Methods
     
      func updateAvatar (with imageURL: URL) {
         
@@ -141,9 +139,6 @@ final class ProfileViewController: UIViewController, ProfileViewControllerProtoc
             descriptionLabel.topAnchor.constraint(equalTo: loginNameLabel.bottomAnchor, constant: 8)
         ])
     }
-    
-    
-    
     
     @objc
     private func logoutButtonTapped() {

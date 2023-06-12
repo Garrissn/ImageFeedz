@@ -110,7 +110,6 @@ final class ImagesListService: ImagesListServiceProtocol {
                     )
                     // Заменяем элемент в массиве.
                     self.photos[index] = newPhoto
-                    //                    self.photos = self.photos.withReplaced(itemAt: index, newValue: newPhoto)
                     
                 }
                 completion(result)

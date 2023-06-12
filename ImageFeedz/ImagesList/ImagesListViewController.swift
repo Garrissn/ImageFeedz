@@ -20,29 +20,24 @@ protocol ImagesListViewControllerProtocol: AnyObject {
 
 final class ImagesListViewController: UIViewController, ImagesListViewControllerProtocol {
     
-    
-    
-    
-    
-    
     // MARK: - Outlets
+    
     @IBOutlet private weak var tableView: UITableView!
     
-    // MARK: - Private Properties
+    // MARK: -  Properties
     
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
-   var presenter: ImagesListPresenterProtocol?
+    var presenter: ImagesListPresenterProtocol?
     
     // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         presenter?.viewDidLoad()
-        //presenter?.setupImageListServiceObserver()
-        //  setupImageListServiceObserver ()
-        // updateTableViewAnimated()
         
     }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showSingleImageSegueIdentifier {
@@ -58,15 +53,14 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
         }
     }
     
+    // MARK: - Methods
+    
     func blockingProgressHudHide() {
         UIBlockingProgressHUD.dismiss()
     }
-    
     func blockingProgressHudShow() {
         UIBlockingProgressHUD.show()
     }
-    
-    
     func loadTableView(oldCount: Int, newCount: Int)  {
         if oldCount != newCount {
             tableView.performBatchUpdates {
@@ -80,6 +74,7 @@ final class ImagesListViewController: UIViewController, ImagesListViewController
     
 }
 // MARK: - UITableViewDataSource
+
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard  let photosCount = presenter?.photos.count else { return 0 }
@@ -96,10 +91,9 @@ extension ImagesListViewController: UITableViewDataSource {
         configCell(for: imageListCell,with: indexPath)
         return imageListCell
     }
-    
-    
 }
 // MARK: - UITableViewDelegate
+
 extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -109,7 +103,6 @@ extension ImagesListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         guard let image = presenter?.photos[indexPath.row] else { return 0}
-        //let image = photos[indexPath.row]
         let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
         let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
         let imageWidth = image.size.width
@@ -121,7 +114,6 @@ extension ImagesListViewController: UITableViewDelegate {
     func tableView( _ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath ) {
         
         presenter?.willDisplay(indexPath: indexPath)
-        
     }
 }
 
@@ -129,12 +121,8 @@ extension ImagesListViewController {
     
     func configCell(for cell: ImagesListCell, with indexPath: IndexPath) {
         cell.delegate = self
-       // presenter?.configureCell(indexPath: indexPath)
-        
         let url = presenter?.configureCell(indexPath: indexPath).url
         let formattedDate = presenter?.configureCell(indexPath: indexPath).formattedData
-        
-        
         
         let cache = ImageCache.default
         cache.diskStorage.config.expiration = .seconds(600)
@@ -145,10 +133,8 @@ extension ImagesListViewController {
             self?.tableView.reloadRows(at: [indexPath], with: .automatic)
         }
         
-        
         cell.labelData.text = formattedDate
         cell.setIsLiked(islike: presenter?.photos[indexPath.row].isLiked ?? false)
-        
     }
 }
 
@@ -157,13 +143,10 @@ extension ImagesListViewController: ImagesListCellDelegate {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         
         presenter?.imageListCellDidTapLike(indexPath: indexPath, completion: { isLiked in
-            DispatchQueue.main.async {
-                cell.setIsLiked(islike: isLiked)
-                              }
-                     }
-              )
+            DispatchQueue.main.async { cell.setIsLiked(islike: isLiked) }
+        }
+        )
     }
-    
 }
 protocol ImagesListCellDelegate: AnyObject {
     func imageListCellDidTapLike(_ cell: ImagesListCell)
