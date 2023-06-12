@@ -36,7 +36,7 @@ final class ImageFeedzUITests: XCTestCase {
             XCTAssertTrue(loginTextField.waitForExistence(timeout: 5))
             loginTextField.tap()
             
-            loginTextField.typeText("garry.818@yandex.ru")
+            loginTextField.typeText(" ")
             sleep(3)
             let doneButton = app.buttons["Done"]
             doneButton.tap()
@@ -49,7 +49,7 @@ final class ImageFeedzUITests: XCTestCase {
            
             passwordTextField.tap()
 
-            passwordTextField.typeText("Unsplash-sprint10")
+            passwordTextField.typeText(" ")
             sleep(3)
             
             webView.swipeUp()
