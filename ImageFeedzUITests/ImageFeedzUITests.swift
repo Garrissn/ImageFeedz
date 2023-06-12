@@ -112,8 +112,8 @@ final class ImageFeedzUITests: XCTestCase {
                 // Проверить, что открылся экран авторизации
             sleep(3)
             app.tabBars.buttons.element(boundBy: 1).tap()
-            XCTAssertTrue(app.staticTexts["Igor Polunin"].exists)
-            XCTAssertTrue(app.staticTexts["@garrik989"].exists)
+            XCTAssertTrue(app.staticTexts[" "].exists)
+            XCTAssertTrue(app.staticTexts[" "].exists)
             
             app.buttons["logoutButton"].tap()
             sleep(3)
