@@ -3,7 +3,7 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -142,12 +142,16 @@
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e2K-l3-oHp" userLabel="BackButton">
                                 <rect key="frame" x="16" y="15" width="24" height="24"/>
+                                <accessibility key="accessibilityConfiguration" identifier="NavBackButtonWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="24" id="R0q-Yn-QfI"/>
                                     <constraint firstAttribute="height" constant="24" id="wuy-4u-CLL"/>
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="Backward"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="NavBackButtonWhite"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="didTapBackButton" destination="R7P-dJ-qtn" eventType="touchUpInside" id="1KP-3l-86O"/>
                                 </connections>
@@ -225,6 +229,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nqZ-fG-KoT">
                                 <rect key="frame" x="16" y="646" width="361" height="48"/>
                                 <color key="backgroundColor" name="YPWhite"/>
+                                <accessibility key="accessibilityConfiguration" identifier="Authenticate"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="bvp-zX-Iem"/>
                                 </constraints>
@@ -238,6 +243,7 @@
                                         <integer key="value" value="16"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="Authenticate"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <segue destination="9hV-h4-Zxy" kind="presentation" identifier="ShowWebView" modalPresentationStyle="overFullScreen" id="psV-7x-84X"/>
@@ -246,6 +252,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="yNw-c8-npP"/>
                         <color key="backgroundColor" name="YPBlack"/>
+                        <accessibility key="accessibilityConfiguration" identifier="Authenticate"/>
                         <constraints>
                             <constraint firstItem="nqZ-fG-KoT" firstAttribute="centerX" secondItem="Xy7-V9-oC1" secondAttribute="centerX" id="6YH-wy-I3G"/>
                             <constraint firstItem="nqZ-fG-KoT" firstAttribute="leading" secondItem="yNw-c8-npP" secondAttribute="leading" constant="16" id="GrG-TN-7Ah"/>
@@ -282,7 +289,7 @@
         <!--Web View View Controller-->
         <scene sceneID="n7i-aV-G3i">
             <objects>
-                <viewController id="9hV-h4-Zxy" customClass="WebViewViewController" customModule="ImageFeedz" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WebViewViewController" id="9hV-h4-Zxy" customClass="WebViewViewController" customModule="ImageFeedz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GIb-ZY-9HF">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -294,6 +301,9 @@
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="UnsplashWebView"/>
+                                </userDefinedRuntimeAttributes>
                             </wkWebView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0qL-Im-fiu" userLabel="nav_back_button">
                                 <rect key="frame" x="9" y="9" width="24" height="24"/>
@@ -314,6 +324,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="GO7-KB-t16"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <accessibility key="accessibilityConfiguration" identifier="UnsplashWebView"/>
                         <constraints>
                             <constraint firstItem="o8K-gU-tgp" firstAttribute="top" secondItem="GIb-ZY-9HF" secondAttribute="top" id="3HQ-5o-Adx"/>
                             <constraint firstAttribute="bottom" secondItem="o8K-gU-tgp" secondAttribute="bottom" id="Bx1-g0-vE7"/>
@@ -325,7 +336,13 @@
                             <constraint firstItem="0qL-Im-fiu" firstAttribute="leading" secondItem="GO7-KB-t16" secondAttribute="leading" constant="9" id="nQs-eY-eP9"/>
                             <constraint firstAttribute="trailing" secondItem="o8K-gU-tgp" secondAttribute="trailing" id="xfo-rJ-PV4"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="UnsplashWebView"/>
+                        </userDefinedRuntimeAttributes>
                     </view>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="UnsplashWebView"/>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="progressView" destination="ISX-dY-gk9" id="III-r5-pHo"/>
                         <outlet property="webView" destination="o8K-gU-tgp" id="Oiz-d9-Hkq"/>

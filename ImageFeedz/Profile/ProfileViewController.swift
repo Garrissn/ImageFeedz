@@ -10,18 +10,22 @@ import UIKit
 import Kingfisher
 import WebKit
 
-final class ProfileViewController: UIViewController {
+ protocol ProfileViewControllerProtocol: AnyObject {
+    var presenter: ProfileViewPresenterProtocol? { get set }
+    func updateAvatar(with imageURL: URL)
+    func updateProfileDetails(profile: Profile?)
+    
+}
+
+final class ProfileViewController: UIViewController, ProfileViewControllerProtocol {
+     var presenter: ProfileViewPresenterProtocol?
     
     // MARK: - Private Properties
-    
-    private let profileService = ProfileService.shared
-    private let tokenStorage = OAuth2TokenStorage()
-    private var profileImageServiceObserver: NSObjectProtocol?
+  
     private let avatarImage: UIImageView = {
         let image = UIImage(named: "avatar")
         let avatarImage = UIImageView(image: image)
         avatarImage.translatesAutoresizingMaskIntoConstraints = false
-        
         return avatarImage
     }()
     
@@ -63,33 +67,20 @@ final class ProfileViewController: UIViewController {
     }()
     
     // MARK: - View Life Cycle
-   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addViews()
         layoutViews()
-        setupPrifileImageObserver ()
-        updateAvatar()
-        updateProfileDetails(profile: profileService.profile)
+        presenter?.viewDidLoad()
+        presenter?.setupPrifileImageObserver()
+       
     }
     
     
-    // MARK: - Private Methods
+    // MARK: -  Methods
     
-    private func setupPrifileImageObserver () {
-        profileImageServiceObserver = NotificationCenter.default.addObserver(
-            forName: ProfileImageService.DidChangeNotification,
-            object: nil,
-            queue: .main)  { [weak self] _ in
-                guard let self = self else { return }
-                self.updateAvatar()
-            }
-    }
-    
-    
-    private func updateAvatar () {
-        guard let profileImageURL = ProfileImageService.shared.avatarURL,
-              let imageURL = URL(string: profileImageURL) else { return }
+     func updateAvatar (with imageURL: URL) {
         
         let cache = ImageCache.default
         cache.diskStorage.config.expiration = .seconds(600)
@@ -102,7 +93,7 @@ final class ProfileViewController: UIViewController {
                                 options: [.processor(processor)])
     }
     
-    private func updateProfileDetails(profile: Profile?) {
+     func updateProfileDetails(profile: Profile?) {
         
         guard let profile = profile else { return }
         descriptionLabel.text = profile.bio
@@ -149,30 +140,10 @@ final class ProfileViewController: UIViewController {
         ])
     }
     
-    
-
-    
     @objc
     private func logoutButtonTapped() {
-        let alertController = UIAlertController(title: "Пока,пока!", message: "Уверены что хотите выйти ?", preferredStyle: .alert)
-        let logoutAction = UIAlertAction(title: "Да", style: .default)  { _ in
-            self.tokenStorage.cleanToken()
-            WebViewViewController.clean()
-            guard let window = UIApplication.shared.windows.first else {
-                fatalError("Invalid Configuration")
-            }
-            let splashViewController = SplashViewController()
-            window.rootViewController = splashViewController
-            window.makeKeyAndVisible()
-            
-        }
-        let cancelAction = UIAlertAction(title: "Нет", style: .cancel, handler: nil)
-        alertController.addAction(logoutAction)
-        alertController.addAction(cancelAction)
-        present(alertController,animated: true, completion: nil)
-        print("logoutButtonTapped")
+        presenter?.logoutButtonTapped(presentingViewController: self)
     }
 }
-
 
 

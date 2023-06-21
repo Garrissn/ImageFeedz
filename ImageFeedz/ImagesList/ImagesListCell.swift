@@ -19,7 +19,9 @@ final class ImagesListCell: UITableViewCell {
     @IBOutlet  weak var cellImage: UIImageView!
     @IBOutlet  weak var likeButton: UIButton!
     @IBOutlet  weak var labelData: UILabel!
+    
     // MARK: - Public Properties
+    
     static let reuseIdentifier = "ImagesListCell"
     weak var delegate: ImagesListCellDelegate?
     
@@ -31,7 +33,7 @@ final class ImagesListCell: UITableViewCell {
         cellImage.kf.cancelDownloadTask()
     }
     
-     func setIsLiked(islike: Bool) {
+    func setIsLiked(islike: Bool) {
         if islike {
             likeButton.setImage(UIImage(named: "likeOn"), for: .normal)
             

@@ -7,7 +7,12 @@
 
 import Foundation
 
-final class ProfileService {
+protocol ProfileServiceProtocol {
+    
+    var profile: Profile? { get }
+}
+
+final class ProfileService: ProfileServiceProtocol {
     // MARK: - Private Properties
     
     static let shared = ProfileService()

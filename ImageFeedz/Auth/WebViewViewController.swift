@@ -9,16 +9,22 @@ import UIKit
 import WebKit
 
 
+public protocol WebViewViewControllerProtocol: AnyObject {
+    var presenter: WebViewPresenterProtocol? { get set }
+    func load(request: URLRequest)
+    func setProgressValue(_ newValue: Float)
+    func setProgressHidden(_ isHidden: Bool)
+}
 
-
-final class WebViewViewController: UIViewController {
+final class WebViewViewController: UIViewController, WebViewViewControllerProtocol {
     
-    // MARK: - Private Properties
+    // MARK: -  Properties
     
-    fileprivate let UnsplashAuthorizeURLString = "https://unsplash.com/oauth/authorize"
+    var presenter: WebViewPresenterProtocol?
     private var estimatedProgressObservation: NSKeyValueObservation?
     weak var delegate: WebViewViewControllerDelegate?
     
+    // MARK: -  Outlets
     @IBOutlet private weak var progressView: UIProgressView!
     @IBOutlet private weak var webView: WKWebView!
     @IBAction private func didTapBackButton(_ sender: Any?) {
@@ -29,18 +35,17 @@ final class WebViewViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        loadWebView()
+        presenter?.viewDidLoad()
         webView.navigationDelegate = self
         estimatedProgressObservation = webView.observe(\.estimatedProgress,
                                                         options: [],
                                                         changeHandler: { [weak self] _, _ in
             guard let self = self else { return }
-            self.updateProgress()
+            presenter?.didUpdateProgressValue(webView.estimatedProgress)
         })
     }
-    // MARK: - Private Methods
-   
+    // MARK: - Methods
+    
     private func observe<Root,Value>(
         _ keyPath: KeyPath<Root,Value>,
         options: NSKeyValueObservingOptions = [],
@@ -48,28 +53,30 @@ final class WebViewViewController: UIViewController {
         
     ) -> NSKeyValueObservation {
         return observe(keyPath, options: options, changeHandler: changeHandler)
-       
+        
+    }
+    
+    func load(request: URLRequest) {
+        webView.load(request)
+    }
+    
+    func setProgressValue(_ newValue: Float) {
+        progressView.progress = newValue
+    }
+    func setProgressHidden(_ isHidden: Bool) {
+        progressView.isHidden = isHidden
     }
     
     
-    private func updateProgress() {
-        progressView.progress = Float(webView.estimatedProgress)
-        progressView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
-    }
 }
 
 extension WebViewViewController: WKNavigationDelegate { // пришел ответ из ансплеш в виде УРЛ, проверяем адрес , делаем выборку ищем код авторизации и передаем его в вебвью
     private func code(from navigationAction: WKNavigationAction) -> String? {
-        if let url = navigationAction.request.url,
-           let urlComponents = URLComponents(string: url.absoluteString),
-           urlComponents.path == "/oauth/authorize/native",
-           let items = urlComponents.queryItems,
-           let codeItem = items.first(where: { $0.name == "code"})
-        {
-            return codeItem.value
-        } else {
-            return nil
+        if let url = navigationAction.request.url {
+            
+            return  presenter?.code(from: url)
         }
+        return nil
     }
     
     func webView(_ webView: WKWebView,//реализация протокола WKNavigationDelegate
@@ -85,22 +92,6 @@ extension WebViewViewController: WKNavigationDelegate { // пришел отве
         }
     }
     
-}
-
-private extension WebViewViewController { // собрали юрл реквест для загрузки вебконтента и передали во вьюдидлоад
-    func loadWebView() {
-        var urlComponents = URLComponents(string: UnsplashAuthorizeURLString)!
-        urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: AccessKey),
-            URLQueryItem(name: "redirect_uri", value: RedirectURI),
-            URLQueryItem(name: "response_type", value: "code"),
-            URLQueryItem(name: "scope", value: AccessScope)
-        ]
-        guard let url = urlComponents.url else { return print ("не удалось получить урл")}
-        
-        let request = URLRequest(url: url)
-        webView.load(request)
-    }
 }
 
 extension WebViewViewController {
