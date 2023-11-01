@@ -11,6 +11,7 @@
 		CE274F9329D1D9A100F48F8A /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE274F9229D1D9A100F48F8A /* ImagesListCell.swift */; };
 		CE36E7362A0BA43F006CDC7A /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE36E7352A0BA43F006CDC7A /* ProfileService.swift */; };
 		CE57107A2A1F694D00204192 /* ImagesListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5710792A1F694C00204192 /* ImagesListService.swift */; };
+		CE6052EE2AF257910093F2DE /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = CE6052ED2AF257910093F2DE /* Readme.md */; };
 		CE68268C29DC4AEF00A969D2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE68268B29DC4AEF00A969D2 /* ProfileViewController.swift */; };
 		CE69ADCF2A34A1B600B17296 /* ProfileMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69ADCE2A34A1B600B17296 /* ProfileMock.swift */; };
 		CE69ADD32A34C15000B17296 /* WebViewPresenterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE69ADD22A34C15000B17296 /* WebViewPresenterSpy.swift */; };
@@ -93,6 +94,7 @@
 		CE38FA1029CF30DD0026601A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE5710792A1F694C00204192 /* ImagesListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListService.swift; sourceTree = "<group>"; };
 		CE57107F2A1FE4B100204192 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CE6052ED2AF257910093F2DE /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		CE68268B29DC4AEF00A969D2 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		CE69ADCE2A34A1B600B17296 /* ProfileMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMock.swift; sourceTree = "<group>"; };
 		CE69ADD22A34C15000B17296 /* WebViewPresenterSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewPresenterSpy.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 		CE6AB45529CD72C000338D9F = {
 			isa = PBXGroup;
 			children = (
+				CE6052ED2AF257910093F2DE /* Readme.md */,
 				CE6AB46029CD72C000338D9F /* ImageFeedz */,
 				CE6AB47729CD72C100338D9F /* ImageFeedzTests */,
 				CE6AB48129CD72C100338D9F /* ImageFeedzUITests */,
@@ -542,6 +545,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE6052EE2AF257910093F2DE /* Readme.md in Resources */,
 				CE6AB46E29CD72C100338D9F /* LaunchScreen.storyboard in Resources */,
 				CE6AB46B29CD72C100338D9F /* Assets.xcassets in Resources */,
 				CE6AB46929CD72C000338D9F /* Main.storyboard in Resources */,
